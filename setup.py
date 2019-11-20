@@ -1,28 +1,30 @@
-import io
-import os
-from setuptools import setup
-
-
-def read(fname):
-    file_path = os.path.join(os.path.dirname(__file__), fname)
-    return io.open(file_path, encoding='utf-8').read()
-
+from setuptools import setup, find_packages
 
 setup(
-    name='omop-abstractor-nlp',
-    version='0.1.0',
+    name='ocr review',
+    version='0.1.1',
     author='Will Thompson',
     author_email='wkt@northwestern.edu',
     maintainer='Will Thompson',
     maintainer_email='wkt@northwestern.edu',
-    description='NLP service',
+    description='NLP Library for OMOP Abstractor',
     url='https://github.com/textractortechnologies/omop-abstractor-nlp',
-    zip_safe=False,
-    packages=['abstractor'],
+    packages=find_packages(include=['review', 'review.*']),
+    # package_data={'review': ['data/*.j2']},
     include_package_data=True,
     install_requires=[
+        'fastapi',
+        'spacy',
+        'pysbd',
+        'pyaml',
       ],
-    entry_points={
-        'console_scripts': []
-    }
+    extras_require={
+        'interactive': ['jupyter', 'jupyter-server', 'jupyterlab']
+    },
+    # entry_points={
+    #     'console_scripts': ['load_moodys_tables=abstractor.<module>:main']
+    # },
+    setup_requires=['pytest-runner', 'flake8', 'python-dotenv', 'black'],
+    tests_require=['pytest', 'pytest-console-scripts'],
 )
+

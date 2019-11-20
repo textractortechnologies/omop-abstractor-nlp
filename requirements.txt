@@ -1,8 +1,0 @@
-flask
-numpy
-pandas
-spacy
-pyaml
-jupyter
-ipython
-# scispacy
