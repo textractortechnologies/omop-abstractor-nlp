@@ -15,14 +15,19 @@ setup(
     install_requires=[
         'fastapi',
         'spacy',
-        'pysbd',
+        # 'pysbd',
         'pyaml',
+        'scikit-learn',
+        'pandas',
+        'numpy',
+        'rdflib',
+        'mypy'
       ],
     extras_require={
         'interactive': ['jupyter', 'jupyter-server', 'jupyterlab']
     },
     # entry_points={
-    #     'console_scripts': ['load_moodys_tables=abstractor.<module>:main']
+    #     'console_scripts': ['scipt_name=abstractor.<module>:main']
     # },
     setup_requires=['pytest-runner', 'flake8', 'python-dotenv', 'black'],
     tests_require=['pytest', 'pytest-console-scripts'],
