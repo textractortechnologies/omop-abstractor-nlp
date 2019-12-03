@@ -1,16 +1,16 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='ocr review',
+    name='OMOP Abstractor NLP',
     version='0.1.1',
     author='Will Thompson',
-    author_email='wkt@northwestern.edu',
+    author_email='will.k.t@gmail.com',
     maintainer='Will Thompson',
-    maintainer_email='wkt@northwestern.edu',
-    description='NLP Library for OMOP Abstractor',
+    maintainer_email='will.k.t@gmail.com',
+    description='NLP library for the OMOP Abstractor project.',
     url='https://github.com/textractortechnologies/omop-abstractor-nlp',
-    packages=find_packages(include=['review', 'review.*']),
-    # package_data={'review': ['data/*.j2']},
+    packages=find_packages(include=['abstractor', 'abstractor.*']),
+    # package_data={'abstractor': ['data/*.j2']},
     include_package_data=True,
     install_requires=[
         'fastapi',
