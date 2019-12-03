@@ -1,0 +1,4 @@
+nlp_components:
+  model: en_core_web_sm
+
+data_dir: ./data
