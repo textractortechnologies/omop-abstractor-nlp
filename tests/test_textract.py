@@ -1,5 +1,9 @@
 import pytest
+import spacy
 
 
-def test_smoke(morph_file_path, topo_file_path):
-    assert morph_file_path is not None
+def test_morph_matcher(morph_matcher):
+    nlp = spacy.load("en_core_web_sm", disable=['ner'])
+    doc = nlp("FINDINGS: Neoplasm, NOS")
+    matches = morph_matcher(doc)
+    print(matches)

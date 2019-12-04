@@ -15,6 +15,7 @@ setup(
     install_requires=[
         'fastapi',
         'spacy',
+        'en_core_web_sm',
         # 'pysbd',
         'pyaml',
         'scikit-learn',
