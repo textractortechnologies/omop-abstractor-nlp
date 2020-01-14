@@ -8,9 +8,7 @@ from pathlib import Path
 from collections import namedtuple
 from typing import List, Dict, Callable
 
-TermItem = namedtuple(
-    "TermItem", ["code", "canon", "syns"], defaults=["", "", []]
-)
+TermItem = namedtuple("TermItem", ["code", "canon", "syns"], defaults=["", "", []])
 
 
 def morph_dict_loader(path: Path) -> List[TermItem]:

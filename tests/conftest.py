@@ -2,7 +2,7 @@ import os
 import pytest
 from spacy.matcher import PhraseMatcher
 from pathlib import Path
-from abstractor.textractor import MatcherGenerator, TermItem
+from abstractor.textractor.textract import MatcherGenerator, TermItem
 import pandas as pd
 from typing import Callable, List
 import math

@@ -1,20 +1,24 @@
-from typing import List
-
-from fastapi import FastAPI, Body
-from pydantic import BaseModel
+from fastapi import BackgroundTasks, Depends, FastAPI
 
 app = FastAPI()
 
 
-class Item(BaseModel):
-    name: str
-    description: str = None
-    price: float
-    tax: float = None
-    tags: List[str] = []
+def write_log(message: str):
+    with open("log.txt", mode="a") as log:
+        log.write(message)
 
 
-@app.put("/items/{item_id}")
-async def update_item(*, item_id: int, item: Item = Body(...)):
-    results = {"item_id": item_id, "item": item}
-    return results
+def get_query(background_tasks: BackgroundTasks, q: str = None):
+    if q:
+        message = f"found query: {q}\n"
+        background_tasks.add_task(write_log, message)
+    return q
+
+
+@app.post("/send-notification/{email}")
+async def send_notification(
+    email: str, background_tasks: BackgroundTasks, q: str = Depends(get_query)
+):
+    message = f"message to {email}\n"
+    background_tasks.add_task(write_log, message)
+    return {"message": "Message sent"}

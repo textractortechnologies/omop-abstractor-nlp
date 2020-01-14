@@ -7,7 +7,7 @@ app = FastAPI()
 
 
 class AbstractionSchema(BaseModel):
-    abstractor_abstraction_schema_id : int
+    abstractor_abstraction_schema_id: int
     abstractor_abstraction_schema_uri: str
     abstractor_abstraction_abstractor_suggestions_uri: str
     abstractor_abstraction_id: int
@@ -28,8 +28,6 @@ class SuggestRequest(BaseModel):
     abstractor_abstraction_schemas: List[AbstractionSchema] = []
 
 
-@app.post("/multiple_suggest")
-async def multiple_suggest(
-        request: SuggestRequest = Body(...)
-):
+@app.post("/multiple_suggest", status_code=201)
+async def multiple_suggest(request: SuggestRequest = Body(...)):
     return

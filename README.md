@@ -1,2 +1,6 @@
-# omop-abstractor-nlp
-NLP Library for OMOP Abstractor
+# NLP Library and Service for OMOP Abstractor
+
+## Usage:
+```bash
+ uvicorn abstractor.service.main:app --reload
+```
