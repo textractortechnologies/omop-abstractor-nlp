@@ -2,7 +2,7 @@ import pytest
 from starlette.testclient import TestClient
 from fastapi.encoders import jsonable_encoder
 from datetime import datetime as dt
-from abstractor.service.main import *
+from abstractor.app.main import *
 
 client = TestClient(app)
 
@@ -31,15 +31,13 @@ def suggest_request(abstraction_schema) -> SuggestRequest:
         source_method="note_text",
         abstractor_rules_uri="https://moomin.com/abstractor_rules.json",
         text="Looks like metastatic carcinoma to me.",
-        abstractor_abstraction_schemas=[
-            abstraction_schema
-        ]
+        abstractor_abstraction_schemas=[abstraction_schema],
     )
 
 
 def test_multiple_suggest(suggest_request):
     print(jsonable_encoder(suggest_request))
-    response=client.post(
+    response = client.post(
         "/multiple_suggest",
         json=jsonable_encoder(suggest_request),
     )

@@ -4,7 +4,7 @@ from abstractor.textractor.textract import *
 
 
 def morph_dict_loader(path: Path, n=math.inf) -> List[TermItem]:
-    """"
+    """ "
     Load the first N entries of the ICDO-3 file
     """
     term_item_dict = {}
