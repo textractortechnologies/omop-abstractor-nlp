@@ -30,4 +30,4 @@ class SuggestRequest(BaseModel):
 
 @app.post("/multiple_suggest", status_code=201)
 async def multiple_suggest(request: SuggestRequest = Body(...)):
-    return
+    print(request)

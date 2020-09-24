@@ -1,6 +1,6 @@
 import pytest
 import math
-from abstractor.textractor.textract import *
+from abstractor.nlp.textract import *
 
 
 def morph_dict_loader(path: Path, n=math.inf) -> List[TermItem]:

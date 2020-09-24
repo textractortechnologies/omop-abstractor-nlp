@@ -4,7 +4,10 @@ from fastapi.encoders import jsonable_encoder
 from datetime import datetime as dt
 from abstractor.app.main import *
 
-client = TestClient(app)
+
+@pytest.fixture(scope="session")
+def client() -> TestClient:
+    return TestClient(app)
 
 
 @pytest.fixture(scope="session")
@@ -35,8 +38,8 @@ def suggest_request(abstraction_schema) -> SuggestRequest:
     )
 
 
-def test_multiple_suggest(suggest_request):
-    print(jsonable_encoder(suggest_request))
+def test_multiple_suggest(client, suggest_request):
+    # print(jsonable_encoder(suggest_request))
     response = client.post(
         "/multiple_suggest",
         json=jsonable_encoder(suggest_request),

@@ -1,9 +1,24 @@
 from fastapi import FastAPI, Body
 from pydantic import BaseModel
 import datetime
+import logging
 from typing import List
 
 app = FastAPI()
+
+
+def make_logger():
+    logger = logging.getLogger("cafrs")
+    logger.setLevel(logging.DEBUG)
+    formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    fh = logging.FileHandler("abstractor_nlp_service.log")
+    fh.setFormatter(formatter)
+    fh.setLevel(logging.INFO)
+    logger.addHandler(fh)
+    return logger
+
+
+logger = make_logger()
 
 
 class AbstractionSchema(BaseModel):
@@ -28,6 +43,6 @@ class SuggestRequest(BaseModel):
     abstractor_abstraction_schemas: List[AbstractionSchema] = []
 
 
-@app.post("/multiple_suggest")
+@app.post("/multiple_suggest", status_code=201)
 async def multiple_suggest(request: SuggestRequest = Body(...)):
-    return
+    logger.info(f"Here is the request: {request}")
