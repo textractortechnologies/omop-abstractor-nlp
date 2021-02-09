@@ -1,0 +1,22 @@
+name: textractor-env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - jupyterlab=3
+  - jupyter_nbextensions_configurator
+  - nbformat=5.0.8
+  - ipyparallel
+  - sqlalchemy
+  - pyodbc
+  - rise
+  - regex
+  - pandas
+  - scikit-learn
+  - seaborn
+  - fastapi
+  - pip
+  - pip:
+    - textacy[all]
+    - spacy >=2.2,<3.0
+
