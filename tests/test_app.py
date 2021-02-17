@@ -11,8 +11,8 @@ def client() -> TestClient:
 
 
 @pytest.fixture(scope="session")
-def abstraction_schema() -> AbstractionSchema:
-    return AbstractionSchema(
+def abstraction_schema() -> AbstractionSchemaMeta:
+    return AbstractionSchemaMeta(
         abstractor_abstraction_schema_id=1184,
         abstractor_abstraction_schema_uri="https://schemas/1184.json",
         abstractor_abstraction_abstractor_suggestions_uri="https://abstractions/669/abstractor_suggestions.json",
@@ -22,6 +22,7 @@ def abstraction_schema() -> AbstractionSchema:
         namespace_type="Abstractor::AbstractorNamespace",
         namespace_id=281,
         abstractor_rule_type="value",
+        abstractor_object_type="list",
         updated_at=dt.strptime("2019-12-16 13:07:50", "%Y-%m-%d %H:%M:%S"),
     )
 
@@ -34,7 +35,10 @@ def suggest_request(abstraction_schema) -> SuggestRequest:
         source_method="note_text",
         abstractor_rules_uri="https://moomin.com/abstractor_rules.json",
         text="Looks like metastatic carcinoma to me.",
+        namespace_type="Abstractor::AbstractorNamespace",
+        namespace_id=488,
         abstractor_abstraction_schemas=[abstraction_schema],
+        abstractor_sections=[]
     )
 
 

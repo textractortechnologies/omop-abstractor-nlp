@@ -3,20 +3,23 @@ channels:
   - conda-forge
 dependencies:
   - python=3.9
-  - jupyterlab=3
-  - jupyter_nbextensions_configurator
-  - nbformat=5.0.8
-  - ipyparallel
+  - pytest
   - sqlalchemy
   - pyodbc
-  - rise
   - regex
   - pandas
-  - scikit-learn
-  - seaborn
+  - numpy
   - fastapi
+  - owlready2
+  - rdflib
+  - flashtext
+  - lemminflect
+  - pyaml
+  - owlready2
   - pip
   - pip:
     - textacy[all]
-    - spacy >=2.2,<3.0
-
+    - spacy >= 3
+    - quickumls
+    - negspacy
+    - extractacy
