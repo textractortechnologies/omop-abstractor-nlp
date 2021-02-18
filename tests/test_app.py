@@ -38,8 +38,9 @@ def suggestion(dir_path) -> SuggestRequest:
 
 
 @patch('services.requests.get')
-def test_multiple_suggest(mock_get, client, suggest_request, suggestion):
+def test_multiple_suggest(mock_get, client, abstraction_schema, suggest_request, suggestion):
     mock_get.return_value.ok = True
+    mock_get.return_value.json.return_value = jsonable_encoder(abstraction_schema)
 
     response = client.post(
         "/multiple_suggest",
