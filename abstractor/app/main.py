@@ -16,20 +16,23 @@ async def multiple_suggest(request: SuggestRequest = Body(...)):
         schema_uri = schema_meta.abstractor_abstraction_schema_uri
         ic(schema_uri)
         if schema_uri in schema_meta_cache:
-            schema_meta_lookup = schema_meta_cache[
-                schema_meta.abstractor_abstraction_schema_uri
-            ]
+            schema_meta_lookup = schema_meta_cache[schema_uri]
             if schema_meta.updated_at > schema_meta_lookup.updated_at:
                 schema = schema_cache[schema_uri]
         else:
-            schema = get_abstraction_schema(schema_meta.abstractor_abstraction_schema_uri)
+            schema = get_abstraction_schema(
+                schema_meta.abstractor_abstraction_schema_uri
+            )
             ic(schema.predicate)
             if schema is None:
-                raise Exception(f"schema not found: {schema_meta.abstractor_abstraction_schema_uri}")
+                raise Exception(
+                    f"schema not found: {schema_meta.abstractor_abstraction_schema_uri}"
+                )
 
         # TODO: async event handling
 
 
 def get_abstraction_schema(uri: str) -> AbstractionSchema:
+    ic(uri)
     resp = requests.get(uri)
     return AbstractionSchema(**resp.json()) if resp.ok is True else None
