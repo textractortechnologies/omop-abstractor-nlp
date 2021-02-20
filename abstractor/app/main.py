@@ -4,6 +4,16 @@ from icecream import ic
 app = FastAPI()
 
 
+class Dispatcher:
+    def get_abstraction_schema(self, meta_schema: AbstractionSchemaMeta) -> AbstractionSchema:
+        ic(meta_schema.abstractor_abstraction_schema_uri)
+        resp = requests.get(meta_schema.abstractor_abstraction_schema_uri)
+        return AbstractionSchema(**resp.json()) if resp.ok is True else None
+
+
+dispatcher = Dispatcher()
+
+
 @app.get("/", status_code=201)
 def greeting():
     return {"msg": "OMOP Abstractor NLP Service"}
@@ -20,9 +30,7 @@ async def multiple_suggest(request: SuggestRequest = Body(...)):
             if schema_meta.updated_at > schema_meta_lookup.updated_at:
                 schema = schema_cache[schema_uri]
         else:
-            schema = get_abstraction_schema(
-                schema_meta.abstractor_abstraction_schema_uri
-            )
+            schema = Dispatcher().get_abstraction_schema(schema_meta)
             ic(schema.predicate)
             if schema is None:
                 raise Exception(
@@ -31,8 +39,3 @@ async def multiple_suggest(request: SuggestRequest = Body(...)):
 
         # TODO: async event handling
 
-
-def get_abstraction_schema(uri: str) -> AbstractionSchema:
-    ic(uri)
-    resp = requests.get(uri)
-    return AbstractionSchema(**resp.json()) if resp.ok is True else None

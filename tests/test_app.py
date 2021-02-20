@@ -3,13 +3,14 @@ import json
 import pytest
 
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import patch, create_autospec
 from starlette.testclient import TestClient
 from fastapi.encoders import jsonable_encoder
 from icecream import ic
-from abstractor.app.main import app
+from abstractor.app.main import *
 from abstractor.app.dataclasses import *
-from services import *
+from mock_services import *
+import abstractor
 
 
 dir_path = Path(os.path.dirname(os.path.realpath(__file__)))
@@ -64,10 +65,15 @@ def mock_get_abstraction_schema(uri: str) -> AbstractionSchema:
     return schema
 
 
-@patch("abstractor.app.main.get_abstraction_schema")
-def test_multiple_suggest(mock_get, client, suggest_request):
-    mock_get.return_value = mock_get_abstraction_schema("1234")
+@patch("abstractor.app.main.Dispatcher")
+def test_multiple_suggest(mock_dispatch, client, abstraction_schema, suggest_request):
+
+    # mock_get.return_value = mock_get_abstraction_schema("1234")
     # mock_get = mock_get_abstraction_schema
+    # dispatcher = create_autospec(abstractor.app.main.dispatcher, spec_set=True)
+    # dispatcher.get_abstraction_schema = lambda x: abstraction_schema
+
+    mock_dispatch.get_abstraction_schema = mock_get_abstraction_schema
 
     response = client.post(
         "/multiple_suggest",
