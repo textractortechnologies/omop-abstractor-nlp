@@ -11,6 +11,7 @@ from abstractor.app.main import *
 from abstractor.app.dataclasses import *
 from mock_services import *
 import abstractor
+import asyncio
 
 
 dir_path = Path(os.path.dirname(os.path.realpath(__file__)))
@@ -58,7 +59,7 @@ def test_abstraction_schema_service(client):
     assert schema is not None
 
 
-@patch("abstractor.app.main.Dispatcher")
+@patch("abstractor.app.main.EventHandler")
 def test_multiple_suggest(mock_dispatch, client, abstraction_schema, suggest_request):
 
     mock_dispatch.get_abstraction_schema = mock_get_abstraction_schema

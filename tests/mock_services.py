@@ -16,6 +16,14 @@ def mock_get_abstraction_schema(schema_meta: AbstractionSchemaMetaData) -> Abstr
     return schema
 
 
+def mock_nlp(request: SuggestRequest, schema: AbstractionSchema) -> List[Suggestion]:
+    return []
+
+
+def mock_submit_suggestion(suggestion: Suggestion, schema_metadata: AbstractionSchemaMetaData) -> None:
+    pass
+
+
 @app.get("/abstractor_abstraction_schemas/{schema_id}", status_code=201)
 async def get_abstraction_schema(schema_id: str) -> AbstractionSchema:
     json_text = Path(dir_path / "data/abstraction_schema.json").read_text()

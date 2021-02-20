@@ -12,6 +12,8 @@ setup(
     include_package_data=True,
     install_requires=[
         "requests",
+        "celery",
+        "rabbitmq",
         "icecream",
         "pandas",
         "regex",
