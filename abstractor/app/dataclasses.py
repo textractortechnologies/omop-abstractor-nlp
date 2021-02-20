@@ -100,7 +100,3 @@ class Suggestion(BaseModel):
     negated: bool
     suggestion_sources: List[SuggestionSource]
 
-
-# TODO: check out https://docs.python.org/dev/library/functools.html#functools.lru_cache
-schema_meta_cache: Dict[str, AbstractionSchemaMeta] = {}
-schema_cache: Dict[str, AbstractionSchema] = {}
