@@ -58,20 +58,8 @@ def test_abstraction_schema_service(client):
     assert schema is not None
 
 
-def mock_get_abstraction_schema(uri: str) -> AbstractionSchema:
-    json_text = Path(dir_path / "data/abstraction_schema.json").read_text()
-    json_dict = json.loads(json_text)
-    schema = AbstractionSchema(**json_dict)
-    return schema
-
-
 @patch("abstractor.app.main.Dispatcher")
 def test_multiple_suggest(mock_dispatch, client, abstraction_schema, suggest_request):
-
-    # mock_get.return_value = mock_get_abstraction_schema("1234")
-    # mock_get = mock_get_abstraction_schema
-    # dispatcher = create_autospec(abstractor.app.main.dispatcher, spec_set=True)
-    # dispatcher.get_abstraction_schema = lambda x: abstraction_schema
 
     mock_dispatch.get_abstraction_schema = mock_get_abstraction_schema
 

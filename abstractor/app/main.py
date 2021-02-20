@@ -7,19 +7,31 @@ app = FastAPI()
 
 class Dispatcher:
     # TODO: check out https://docs.python.org/dev/library/functools.html#functools.lru_cache
-    schema_cache: Dict[str, Tuple[AbstractionSchemaMeta, AbstractionSchema]] = {}
+    schema_cache: Dict[str, Tuple[AbstractionSchemaMetaData, AbstractionSchema]] = {}
 
     @staticmethod
-    def get_abstraction_schema(meta_schema: AbstractionSchemaMeta) -> AbstractionSchema:
+    def get_abstraction_schema(meta_schema: AbstractionSchemaMetaData) -> AbstractionSchema:
         schema_uri = meta_schema.abstractor_abstraction_schema_uri
-        ic(schema_uri)
         if schema_uri in Dispatcher.schema_cache:
             meta, schema = Dispatcher.schema_cache[schema_uri]
             if meta.updated_at <= meta.updated_at:
                 return schema
 
         resp = requests.get(meta_schema.abstractor_abstraction_schema_uri)
-        return AbstractionSchema(**resp.json()) if resp.ok is True else None
+        if resp.ok is True:
+            schema = AbstractionSchema(**resp.json())
+            Dispatcher.schema_cache[schema_uri] = (meta_schema, schema)
+            return schema
+
+        return None
+
+    @staticmethod
+    def nlp(request: SuggestRequest, schema: AbstractionSchema) -> List[Suggestion]:
+        return []
+
+    @staticmethod
+    def submit_suggestion(suggestion: Suggestion, schema_metadata: AbstractionSchemaMetaData) -> None:
+        pass
 
 
 @app.get("/", status_code=201)
@@ -29,14 +41,18 @@ def greeting():
 
 @app.post("/multiple_suggest", status_code=201)
 async def multiple_suggest(request: SuggestRequest = Body(...)):
-    for schema_meta in request.abstractor_abstraction_schemas:
-        schema_uri = schema_meta.abstractor_abstraction_schema_uri
-        ic(schema_uri)
-        schema = Dispatcher.get_abstraction_schema(schema_meta)
+    for schema_metadata in request.abstractor_abstraction_schemas:
+        schema = Dispatcher.get_abstraction_schema(schema_metadata)
+        ic(schema.predicate)
         if schema is None:
             raise Exception(
-                f"failed to get schema: {schema_meta.abstractor_abstraction_schema_uri}"
+                f"failed to get schema: {schema_metadata.abstractor_abstraction_schema_uri}"
             )
+        else:
+            suggestions = Dispatcher.nlp(request, schema)
+            ic(len(suggestions))
+            for suggestion in suggestions:
+                Dispatcher.submit_suggestion(suggestion, schema_metadata)
+                ic(suggestion)
 
-        # TODO: async event handling
 

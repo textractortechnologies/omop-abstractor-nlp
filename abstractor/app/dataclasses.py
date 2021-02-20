@@ -34,7 +34,7 @@ class AbstractionSchema(BaseModel):
     object_values: List[Entry]
 
 
-class AbstractionSchemaMeta(BaseModel):
+class AbstractionSchemaMetaData(BaseModel):
     abstractor_abstraction_schema_id: int
     abstractor_abstraction_schema_uri: str
     abstractor_abstraction_abstractor_suggestions_uri: str
@@ -71,7 +71,7 @@ class SuggestRequest(BaseModel):
     text: str
     namespace_type: str
     namespace_id: int
-    abstractor_abstraction_schemas: List[AbstractionSchemaMeta] = []
+    abstractor_abstraction_schemas: List[AbstractionSchemaMetaData] = []
     abstractor_sections: List[AbstractorSection]
 
 
