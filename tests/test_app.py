@@ -62,7 +62,15 @@ def test_abstraction_schema_service(client):
 @patch("abstractor.app.main.EventHandler.submit_suggestion")
 @patch("abstractor.app.main.EventHandler.run_nlp")
 @patch("abstractor.app.main.EventHandler.get_abstraction_schema")
-def test_multiple_suggest(mock_get, mock_nlp, mock_suggest, client, abstraction_schema, suggest_request, suggestion):
+def test_multiple_suggest(
+    mock_get,
+    mock_nlp,
+    mock_suggest,
+    client,
+    abstraction_schema,
+    suggest_request,
+    suggestion,
+):
 
     mock_get.return_value = abstraction_schema
     mock_nlp.return_value = [suggestion]

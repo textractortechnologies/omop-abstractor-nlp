@@ -99,4 +99,3 @@ class Suggestion(BaseModel):
     not_applicable: bool = None
     negated: bool
     suggestion_sources: List[SuggestionSource]
-

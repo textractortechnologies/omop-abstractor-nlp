@@ -13,5 +13,3 @@ def test_abstraction_schema_service():
     assert response.ok is True
     schema = AbstractionSchema(**response.json())
     ic(schema)
-
-

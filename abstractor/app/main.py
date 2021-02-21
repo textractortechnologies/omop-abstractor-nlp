@@ -1,3 +1,4 @@
+import time
 from typing import List, Tuple, Dict
 from fastapi import FastAPI, BackgroundTasks
 from icecream import ic
@@ -11,7 +12,9 @@ class EventHandler:
     schema_cache: Dict[str, Tuple[AbstractionSchemaMetaData, AbstractionSchema]] = {}
 
     @staticmethod
-    def get_abstraction_schema(meta_schema: AbstractionSchemaMetaData) -> AbstractionSchema:
+    def get_abstraction_schema(
+        meta_schema: AbstractionSchemaMetaData,
+    ) -> AbstractionSchema:
         schema_uri = meta_schema.abstractor_abstraction_schema_uri
         if schema_uri in EventHandler.schema_cache:
             meta, schema = EventHandler.schema_cache[schema_uri]
@@ -31,7 +34,9 @@ class EventHandler:
         return []
 
     @staticmethod
-    def submit_suggestion(suggestion: Suggestion, schema_metadata: AbstractionSchemaMetaData) -> None:
+    def submit_suggestion(
+        suggestion: Suggestion, schema_metadata: AbstractionSchemaMetaData
+    ) -> None:
         pass
 
     @staticmethod
@@ -40,7 +45,9 @@ class EventHandler:
             schema = EventHandler.get_abstraction_schema(schema_metadata)
             ic(schema.predicate)
             if schema is None:
-                raise Exception(f"schema not found: {schema_metadata.abstractor_abstraction_schema_uri}")
+                raise Exception(
+                    f"schema not found: {schema_metadata.abstractor_abstraction_schema_uri}"
+                )
             else:
                 suggestions = EventHandler.run_nlp(request, schema)
                 ic(len(suggestions))
@@ -55,8 +62,8 @@ def greeting():
 
 
 @app.post("/multiple_suggest", status_code=201)
-def multiple_suggest(background_tasks: BackgroundTasks, request: SuggestRequest = Body(...)):
+def multiple_suggest(
+    background_tasks: BackgroundTasks, request: SuggestRequest = Body(...)
+):
     background_tasks.add_task(EventHandler.handle_request, request)
     return {"msg": f"request accepted"}
-
-
