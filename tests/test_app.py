@@ -59,14 +59,19 @@ def test_abstraction_schema_service(client):
     assert schema is not None
 
 
-@patch("abstractor.app.main.EventHandler")
-def test_multiple_suggest(mock_dispatch, client, abstraction_schema, suggest_request):
+@patch("abstractor.app.main.EventHandler.submit_suggestion")
+@patch("abstractor.app.main.EventHandler.run_nlp")
+@patch("abstractor.app.main.EventHandler.get_abstraction_schema")
+def test_multiple_suggest(mock_get, mock_nlp, mock_suggest, client, abstraction_schema, suggest_request, suggestion):
 
-    mock_dispatch.get_abstraction_schema = mock_get_abstraction_schema
+    mock_get.return_value = abstraction_schema
+    mock_nlp.return_value = [suggestion]
+    mock_suggest.return_value = None
 
     response = client.post(
         "/multiple_suggest",
         json=jsonable_encoder(suggest_request),
     )
+
     assert response.status_code == 201
-    assert response.json() is None
+    assert response.json() == {"msg": "request accepted"}

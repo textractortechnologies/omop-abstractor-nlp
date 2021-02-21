@@ -1,1 +1,1 @@
-docker build -t textractor .
+docker build -t omop-abstrator-nlp .

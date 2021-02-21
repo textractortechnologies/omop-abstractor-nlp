@@ -27,7 +27,7 @@ class EventHandler:
         return None
 
     @staticmethod
-    def nlp(request: SuggestRequest, schema: AbstractionSchema) -> List[Suggestion]:
+    def run_nlp(request: SuggestRequest, schema: AbstractionSchema) -> List[Suggestion]:
         return []
 
     @staticmethod
@@ -40,11 +40,9 @@ class EventHandler:
             schema = EventHandler.get_abstraction_schema(schema_metadata)
             ic(schema.predicate)
             if schema is None:
-                raise Exception(
-                    f"failed to get schema: {schema_metadata.abstractor_abstraction_schema_uri}"
-                )
+                raise Exception(f"schema not found: {schema_metadata.abstractor_abstraction_schema_uri}")
             else:
-                suggestions = EventHandler.nlp(request, schema)
+                suggestions = EventHandler.run_nlp(request, schema)
                 ic(len(suggestions))
                 for suggestion in suggestions:
                     EventHandler.submit_suggestion(suggestion, schema_metadata)
@@ -57,7 +55,8 @@ def greeting():
 
 
 @app.post("/multiple_suggest", status_code=201)
-async def multiple_suggest(request: SuggestRequest = Body(...)):
-    EventHandler.handle_request(request)
+def multiple_suggest(background_tasks: BackgroundTasks, request: SuggestRequest = Body(...)):
+    background_tasks.add_task(EventHandler.handle_request, request)
+    return {"msg": f"request accepted"}
 
 

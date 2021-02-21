@@ -12,6 +12,6 @@ def test_abstraction_schema_service():
     response = client.get(f"/abstractor_abstraction_schemas/{'1234.json'}")
     assert response.ok is True
     schema = AbstractionSchema(**response.json())
-    print(schema)
+    ic(schema)
 
 
