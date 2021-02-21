@@ -83,12 +83,11 @@ def test_abstraction_schema_service(client):
     assert schema is not None
 
 
-@patch(
-    "abstractor.app.main.EventHandler.submit_suggestion", name="mock_submit_suggestion"
-)
-@patch("abstractor.app.main.EventHandler.run_nlp", name="mock_run_nlp")
-@patch(
-    "abstractor.app.main.EventHandler.get_abstraction_schema",
+@patch.object(abstractor.app.main.EventHandler, "submit_suggestion", name="mock_submit_suggestion")
+@patch.object(abstractor.app.main.EventHandler, "run_nlp", name="mock_run_nlp")
+@patch.object(
+    abstractor.app.main.EventHandler,
+    "get_abstraction_schema",
     name="mock_get_abstraction_schema",
 )
 def test_multiple_suggest(
@@ -136,4 +135,3 @@ def test_multiple_suggest(
         ),
     ]
     assert mock_suggest.mock_calls == expected
-
