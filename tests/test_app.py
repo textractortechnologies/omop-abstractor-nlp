@@ -73,7 +73,15 @@ def test_abstraction_schema_service(client):
     response = client.get(f"/abstractor_abstraction_schemas/{'1234.json'}")
     assert response.ok is True
     schema = AbstractionSchema(**response.json())
-    assert schema is not None
+    assert schema.predicate == "has_metastatic_cancer_site"
+
+
+def test_suggestion_service(client):
+    response = client.post(
+        f"/abstractor_abstractions/{10578}/abstractor_suggestions.json"
+    )
+    assert response.ok is True
+    ic(response)
 
 
 @patch.object(
