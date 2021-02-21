@@ -9,7 +9,7 @@
   "abstractor_abstraction_schemas": [
     {
       "abstractor_abstraction_schema_id": 1,
-      "abstractor_abstraction_schema_uri": "http://localhost:8000/abstractor_abstraction_schemas/2470.json",
+      "abstractor_abstraction_schema_uri": "http://localhost:8000/abstractor_abstraction_schemas/schema-1.json",
       "abstractor_abstraction_abstractor_suggestions_uri": "http://localhost:8000/abstractor_abstractions/10577/abstractor_suggestions.json",
       "abstractor_abstraction_id": 10577,
       "abstractor_abstraction_source_id": 5403,
@@ -22,7 +22,7 @@
     },
     {
       "abstractor_abstraction_schema_id": 2,
-      "abstractor_abstraction_schema_uri": "http://localhost:8000/abstractor_abstraction_schemas/2471.json",
+      "abstractor_abstraction_schema_uri": "http://localhost:8000/abstractor_abstraction_schemas/schema-2.json",
       "abstractor_abstraction_abstractor_suggestions_uri": "http://localhost:8000/abstractor_abstractions/10578/abstractor_suggestions.json",
       "abstractor_abstraction_id": 10578,
       "abstractor_abstraction_source_id": 5404,

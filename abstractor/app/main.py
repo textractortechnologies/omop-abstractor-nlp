@@ -9,6 +9,10 @@ app = FastAPI()
 
 @app.get("/", status_code=201)
 def greeting():
+    """
+    greeting
+    :return:
+    """
     return {"msg": "OMOP Abstractor NLP Service"}
 
 
@@ -16,6 +20,12 @@ def greeting():
 def multiple_suggest(
     background_tasks: BackgroundTasks, request: SuggestRequest = Body(...)
 ):
+    """
+    multiple_suggest
+    :param background_tasks:
+    :param request:
+    :return:
+    """
     background_tasks.add_task(EventHandler.handle_request, request)
     return {"msg": f"request accepted"}
 
@@ -32,6 +42,11 @@ class EventHandler:
     def get_abstraction_schema(
         schema_metadata: AbstractionSchemaMetaData,
     ) -> AbstractionSchema:
+        """
+        get_abstraction_schema
+        :param schema_metadata:
+        :return:
+        """
         schema_uri = schema_metadata.abstractor_abstraction_schema_uri
         if schema_uri in EventHandler.schema_cache:
             meta, schema = EventHandler.schema_cache[schema_uri]
@@ -48,16 +63,33 @@ class EventHandler:
 
     @staticmethod
     def run_nlp(request: SuggestRequest, schema: AbstractionSchema) -> List[Suggestion]:
+        """
+        run_nlp
+        :param request:
+        :param schema:
+        :return:
+        """
         return []
 
     @staticmethod
     def submit_suggestion(
         suggestion: Suggestion, schema_metadata: AbstractionSchemaMetaData
     ) -> None:
+        """
+        submit_suggestion
+        :param suggestion:
+        :param schema_metadata:
+        :return:
+        """
         pass
 
     @staticmethod
     def handle_request(request: SuggestRequest) -> None:
+        """
+        handle_request
+        :param request:
+        :return:
+        """
         for schema_metadata in request.abstractor_abstraction_schemas:
             ic(schema_metadata.abstractor_abstraction_schema_id)
             schema = EventHandler.get_abstraction_schema(schema_metadata)

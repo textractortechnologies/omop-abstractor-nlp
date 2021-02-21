@@ -103,8 +103,8 @@ def test_multiple_suggest(
     suggestion_2,
 ):
 
-    mock_get.return_value = schema_1
-    mock_nlp.return_value = [suggestion_1]
+    mock_get.side_effect = [schema_1, schema_2]
+    mock_nlp.side_effect = [[suggestion_1], [suggestion_2]]
     mock_suggest.return_value = None
 
     response = client.post(
@@ -115,21 +115,25 @@ def test_multiple_suggest(
     assert response.status_code == 201
     assert response.json() == {"msg": "request accepted"}
 
+    mock_get.assert_called()
     expected = [
         call.get_abstraction_schema(request_1.abstractor_abstraction_schemas[0]),
         call.get_abstraction_schema(request_1.abstractor_abstraction_schemas[1]),
     ]
     assert mock_get.mock_calls == expected
 
-    expected = [call.run_nlp(request_1, schema_1), call.run_nlp(request_1, schema_1)]
+    mock_nlp.assert_called()
+    expected = [call.run_nlp(request_1, schema_1), call.run_nlp(request_1, schema_2)]
     assert mock_nlp.mock_calls == expected
 
+    mock_suggest.assert_called()
     expected = [
         call.submit_suggestion(
             suggestion_1, request_1.abstractor_abstraction_schemas[0]
         ),
         call.submit_suggestion(
-            suggestion_1, request_1.abstractor_abstraction_schemas[1]
+            suggestion_2, request_1.abstractor_abstraction_schemas[1]
         ),
     ]
     assert mock_suggest.mock_calls == expected
+
