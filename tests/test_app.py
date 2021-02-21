@@ -1,17 +1,10 @@
-import os
-import json
 import pytest
-
-from pathlib import Path
 from unittest.mock import patch, call
 from starlette.testclient import TestClient
 from fastapi.encoders import jsonable_encoder
-from icecream import ic
-from abstractor.app.main import *
-from abstractor.app.dataclasses import *
+from abstractor.app.main import EventHandler
 from mock_services import *
 import abstractor
-import asyncio
 
 
 dir_path = Path(os.path.dirname(os.path.realpath(__file__)))
@@ -83,7 +76,9 @@ def test_abstraction_schema_service(client):
     assert schema is not None
 
 
-@patch.object(abstractor.app.main.EventHandler, "submit_suggestion", name="mock_submit_suggestion")
+@patch.object(
+    abstractor.app.main.EventHandler, "submit_suggestion", name="mock_submit_suggestion"
+)
 @patch.object(abstractor.app.main.EventHandler, "run_nlp", name="mock_run_nlp")
 @patch.object(
     abstractor.app.main.EventHandler,
