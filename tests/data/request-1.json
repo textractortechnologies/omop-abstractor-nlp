@@ -1,0 +1,38 @@
+{
+  "source_id": 2049,
+  "source_type": "NoteStableIdentifier",
+  "source_method": "note_text",
+  "abstractor_rules_uri": "abstractor_rules.json",
+  "text": "Frontal lobe: Glioblastoma looks to be it.",
+  "namespace_type": "Abstractor::AbstractorNamespace",
+  "namespace_id": 488,
+  "abstractor_abstraction_schemas": [
+    {
+      "abstractor_abstraction_schema_id": 1,
+      "abstractor_abstraction_schema_uri": "http://localhost:8000/abstractor_abstraction_schemas/2470.json",
+      "abstractor_abstraction_abstractor_suggestions_uri": "http://localhost:8000/abstractor_abstractions/10577/abstractor_suggestions.json",
+      "abstractor_abstraction_id": 10577,
+      "abstractor_abstraction_source_id": 5403,
+      "abstractor_subject_id": 5403,
+      "namespace_type": "Abstractor::AbstractorNamespace",
+      "namespace_id": 488,
+      "abstractor_rule_type": "value",
+      "abstractor_object_type": "list",
+      "updated_at": "2020-10-06T20:56:40Z"
+    },
+    {
+      "abstractor_abstraction_schema_id": 2,
+      "abstractor_abstraction_schema_uri": "http://localhost:8000/abstractor_abstraction_schemas/2471.json",
+      "abstractor_abstraction_abstractor_suggestions_uri": "http://localhost:8000/abstractor_abstractions/10578/abstractor_suggestions.json",
+      "abstractor_abstraction_id": 10578,
+      "abstractor_abstraction_source_id": 5404,
+      "abstractor_subject_id": 5404,
+      "namespace_type": "Abstractor::AbstractorNamespace",
+      "namespace_id": 488,
+      "abstractor_rule_type": "value",
+      "abstractor_object_type": "list",
+      "updated_at": "2020-10-06T20:56:42Z"
+    }
+  ],
+  "abstractor_sections": []
+}

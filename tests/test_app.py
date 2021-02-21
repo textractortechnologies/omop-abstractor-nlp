@@ -3,7 +3,7 @@ import json
 import pytest
 
 from pathlib import Path
-from unittest.mock import patch, create_autospec
+from unittest.mock import patch, call
 from starlette.testclient import TestClient
 from fastapi.encoders import jsonable_encoder
 from icecream import ic
@@ -23,24 +23,48 @@ def client() -> TestClient:
 
 
 @pytest.fixture(scope="module")
-def abstraction_schema() -> AbstractionSchema:
-    json_text = Path(dir_path / "data/abstraction_schema.json").read_text()
+def schema_0() -> AbstractionSchema:
+    json_text = Path(dir_path / "data/schema-0.json").read_text()
     json_dict = json.loads(json_text)
     schema = AbstractionSchema(**json_dict)
     return schema
 
 
 @pytest.fixture(scope="module")
-def suggest_request() -> SuggestRequest:
-    json_text = Path(dir_path / "data/suggest_request.json").read_text()
+def schema_1() -> AbstractionSchema:
+    json_text = Path(dir_path / "data/schema-1.json").read_text()
+    json_dict = json.loads(json_text)
+    schema = AbstractionSchema(**json_dict)
+    return schema
+
+
+@pytest.fixture(scope="module")
+def schema_2() -> AbstractionSchema:
+    json_text = Path(dir_path / "data/schema-2.json").read_text()
+    json_dict = json.loads(json_text)
+    schema = AbstractionSchema(**json_dict)
+    return schema
+
+
+@pytest.fixture(scope="module")
+def request_1() -> SuggestRequest:
+    json_text = Path(dir_path / "data/request-1.json").read_text()
     json_dict = json.loads(json_text)
     request = SuggestRequest(**json_dict)
     return request
 
 
 @pytest.fixture(scope="module")
-def suggestion() -> SuggestRequest:
-    json_text = Path(dir_path / "data/suggestion.json").read_text()
+def suggestion_1() -> SuggestRequest:
+    json_text = Path(dir_path / "data/suggestion-1.json").read_text()
+    json_dict = json.loads(json_text)
+    suggestion = Suggestion(**json_dict)
+    return suggestion
+
+
+@pytest.fixture(scope="module")
+def suggestion_2() -> SuggestRequest:
+    json_text = Path(dir_path / "data/suggestion-2.json").read_text()
     json_dict = json.loads(json_text)
     suggestion = Suggestion(**json_dict)
     return suggestion
@@ -59,27 +83,53 @@ def test_abstraction_schema_service(client):
     assert schema is not None
 
 
-@patch("abstractor.app.main.EventHandler.submit_suggestion")
-@patch("abstractor.app.main.EventHandler.run_nlp")
-@patch("abstractor.app.main.EventHandler.get_abstraction_schema")
+@patch(
+    "abstractor.app.main.EventHandler.submit_suggestion", name="mock_submit_suggestion"
+)
+@patch("abstractor.app.main.EventHandler.run_nlp", name="mock_run_nlp")
+@patch(
+    "abstractor.app.main.EventHandler.get_abstraction_schema",
+    name="mock_get_abstraction_schema",
+)
 def test_multiple_suggest(
     mock_get,
     mock_nlp,
     mock_suggest,
     client,
-    abstraction_schema,
-    suggest_request,
-    suggestion,
+    request_1,
+    schema_1,
+    schema_2,
+    suggestion_1,
+    suggestion_2,
 ):
 
-    mock_get.return_value = abstraction_schema
-    mock_nlp.return_value = [suggestion]
+    mock_get.return_value = schema_1
+    mock_nlp.return_value = [suggestion_1]
     mock_suggest.return_value = None
 
     response = client.post(
         "/multiple_suggest",
-        json=jsonable_encoder(suggest_request),
+        json=jsonable_encoder(request_1),
     )
 
     assert response.status_code == 201
     assert response.json() == {"msg": "request accepted"}
+
+    expected = [
+        call.get_abstraction_schema(request_1.abstractor_abstraction_schemas[0]),
+        call.get_abstraction_schema(request_1.abstractor_abstraction_schemas[1]),
+    ]
+    assert mock_get.mock_calls == expected
+
+    expected = [call.run_nlp(request_1, schema_1), call.run_nlp(request_1, schema_1)]
+    assert mock_nlp.mock_calls == expected
+
+    expected = [
+        call.submit_suggestion(
+            suggestion_1, request_1.abstractor_abstraction_schemas[0]
+        ),
+        call.submit_suggestion(
+            suggestion_1, request_1.abstractor_abstraction_schemas[1]
+        ),
+    ]
+    assert mock_suggest.mock_calls == expected

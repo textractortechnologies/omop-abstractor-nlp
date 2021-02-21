@@ -1,0 +1,20 @@
+{
+	"predicate": "has_metastatic_cancer_site",
+	"display_name": "Site",
+	"abstractor_object_type": "list",
+	"preferred_name": "cancer site",
+	"predicate_variants": [
+
+	],
+	"object_values": [
+		{
+			"value": "frontal lobe",
+			"properties": null,
+			"vocabulary_code": "C71.1",
+			"vocabulary": "ICD-O-3",
+			"vocabulary_version": "2011 Updates to ICD-O-3",
+			"case_sensitive": "false",
+			"object_value_variants": []
+		}
+	]
+}
