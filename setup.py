@@ -17,6 +17,7 @@ setup(
         "icecream",
         "pandas",
         "regex",
+        "pluggy",
         "pyyaml",
         "fastapi",
         "uvicorn",

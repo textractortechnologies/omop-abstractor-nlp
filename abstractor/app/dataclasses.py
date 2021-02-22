@@ -2,7 +2,7 @@ import requests
 import datetime
 from fastapi import FastAPI, Body
 from pydantic import BaseModel
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 
 ########################################################################################################################
@@ -95,7 +95,7 @@ class Suggestion(BaseModel):
     source_type: str
     source_method: str
     value: str
-    unknown: bool = None
-    not_applicable: bool = None
-    negated: bool
+    unknown: Optional[bool] = None
+    not_applicable: Optional[bool] = None
+    negated: bool = False
     suggestion_sources: List[SuggestionSource]

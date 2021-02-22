@@ -1,6 +1,6 @@
 import time
 from typing import List, Tuple, Dict
-from fastapi import FastAPI, BackgroundTasks
+from fastapi import FastAPI, BackgroundTasks, Depends, HTTPException
 from fastapi.encoders import jsonable_encoder
 from icecream import ic
 from abstractor.app.dataclasses import *
@@ -18,9 +18,7 @@ def greeting():
 
 
 @app.post("/multiple_suggest", status_code=201)
-def multiple_suggest(
-    background_tasks: BackgroundTasks, request: SuggestRequest = Body(...)
-):
+def multiple_suggest(background_tasks: BackgroundTasks, request: SuggestRequest):
     """
     multiple_suggest
     :param background_tasks:
@@ -75,7 +73,7 @@ class EventHandler:
     @staticmethod
     def submit_suggestion(
         suggestion: Suggestion, schema_metadata: AbstractionSchemaMetaData
-    ) -> None:
+    ) -> bool:
         """
         submit_suggestion
         :param suggestion:
@@ -84,6 +82,7 @@ class EventHandler:
         """
         suggest_uri = schema_metadata.abstractor_abstraction_abstractor_suggestions_uri
         resp = requests.post(suggest_uri, data=jsonable_encoder(suggestion))
+        return resp.ok is True
 
     @staticmethod
     def handle_request(request: SuggestRequest) -> None:

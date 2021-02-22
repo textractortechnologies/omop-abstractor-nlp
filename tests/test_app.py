@@ -80,6 +80,11 @@ def test_abstraction_schema_service(client, schema_1, schema_2):
     schema = AbstractionSchema(**response.json())
     assert schema == schema_2
 
+    response = client.get(f"/abstractor_abstraction_schemas/{'schema-3.json'}")
+    assert response.ok is False
+    assert response.status_code == 404
+    assert response.json() == {"detail": "schema not found: schema-3.json"}
+
 
 def test_suggestion_service(client, suggestion_1, suggestion_2):
     response = client.post(
@@ -87,14 +92,34 @@ def test_suggestion_service(client, suggestion_1, suggestion_2):
         json=jsonable_encoder(suggestion_1),
     )
     assert response.ok is True
-    assert response.json() == {"msg": f"accepted suggestion {suggestion_2.abstractor_abstraction_source_id}"}
+    assert response.json() == {
+        "msg": f"accepted suggestion {suggestion_2.abstractor_abstraction_source_id}"
+    }
 
     response = client.post(
         f"/abstractor_abstractions/{suggestion_2.abstractor_abstraction_source_id}/abstractor_suggestions.json",
         json=jsonable_encoder(suggestion_2),
     )
     assert response.ok is True
-    assert response.json() == {"msg": f"accepted suggestion {suggestion_2.abstractor_abstraction_source_id}"}
+    assert response.json() == {
+        "msg": f"accepted suggestion {suggestion_2.abstractor_abstraction_source_id}"
+    }
+
+
+def test_test_multiple_suggest(client, request_1):
+    response = client.post(
+        "/test_multiple_suggest",
+        json=jsonable_encoder(request_1),
+    )
+    assert response.ok is True
+    assert response.json() == {"msg": "request accepted", "nlp": "default"}
+
+    response = client.post(
+        f"/test_multiple_suggest?nlp_type=special",
+        json=jsonable_encoder(request_1),
+    )
+    assert response.ok is True
+    assert response.json() == {"msg": "request accepted", "nlp": "special"}
 
 
 @patch.object(
@@ -126,7 +151,7 @@ def test_multiple_suggest(
         "/multiple_suggest",
         json=jsonable_encoder(request_1),
     )
-
+    ic(response)
     assert response.status_code == 201
     assert response.json() == {"msg": "request accepted"}
 
