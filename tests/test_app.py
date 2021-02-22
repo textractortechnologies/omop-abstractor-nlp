@@ -83,11 +83,18 @@ def test_abstraction_schema_service(client, schema_1, schema_2):
 
 def test_suggestion_service(client, suggestion_1, suggestion_2):
     response = client.post(
-        f"/abstractor_abstractions/{10578}/abstractor_suggestions.json",
+        f"/abstractor_abstractions/{suggestion_1.abstractor_abstraction_source_id}/abstractor_suggestions.json",
         json=jsonable_encoder(suggestion_1),
     )
     assert response.ok is True
-    assert response.json() == {"msg": "accepted suggestion 301"}
+    assert response.json() == {"msg": f"accepted suggestion {suggestion_2.abstractor_abstraction_source_id}"}
+
+    response = client.post(
+        f"/abstractor_abstractions/{suggestion_2.abstractor_abstraction_source_id}/abstractor_suggestions.json",
+        json=jsonable_encoder(suggestion_2),
+    )
+    assert response.ok is True
+    assert response.json() == {"msg": f"accepted suggestion {suggestion_2.abstractor_abstraction_source_id}"}
 
 
 @patch.object(

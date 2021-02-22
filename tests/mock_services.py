@@ -31,4 +31,4 @@ def accept_suggestion(
     abstractor_abstraction_id: int, suggestion: Suggestion = Body(...)
 ):
     ic(abstractor_abstraction_id)
-    return {"msg": f"accepted suggestion {suggestion.source_id}"}
+    return {"msg": f"accepted suggestion {suggestion.abstractor_abstraction_source_id}"}
