@@ -69,19 +69,25 @@ def test_smoke(client):
     assert response.json() == {"msg": "OMOP Abstractor NLP Service"}
 
 
-def test_abstraction_schema_service(client):
-    response = client.get(f"/abstractor_abstraction_schemas/{'1234.json'}")
+def test_abstraction_schema_service(client, schema_1, schema_2):
+    response = client.get(f"/abstractor_abstraction_schemas/{'schema-1.json'}")
     assert response.ok is True
     schema = AbstractionSchema(**response.json())
-    assert schema.predicate == "has_metastatic_cancer_site"
+    assert schema == schema_1
+
+    response = client.get(f"/abstractor_abstraction_schemas/{'schema-2.json'}")
+    assert response.ok is True
+    schema = AbstractionSchema(**response.json())
+    assert schema == schema_2
 
 
-def test_suggestion_service(client):
+def test_suggestion_service(client, suggestion_1, suggestion_2):
     response = client.post(
-        f"/abstractor_abstractions/{10578}/abstractor_suggestions.json"
+        f"/abstractor_abstractions/{10578}/abstractor_suggestions.json",
+        json=jsonable_encoder(suggestion_1),
     )
     assert response.ok is True
-    ic(response)
+    assert response.json() == {"msg": "accepted suggestion 301"}
 
 
 @patch.object(

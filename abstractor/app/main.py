@@ -1,6 +1,7 @@
 import time
 from typing import List, Tuple, Dict
 from fastapi import FastAPI, BackgroundTasks
+from fastapi.encoders import jsonable_encoder
 from icecream import ic
 from abstractor.app.dataclasses import *
 
@@ -81,7 +82,8 @@ class EventHandler:
         :param schema_metadata:
         :return:
         """
-        pass
+        suggest_uri = schema_metadata.abstractor_abstraction_abstractor_suggestions_uri
+        resp = requests.post(suggest_uri, data=jsonable_encoder(suggestion))
 
     @staticmethod
     def handle_request(request: SuggestRequest) -> None:
