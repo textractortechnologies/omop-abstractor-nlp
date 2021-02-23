@@ -1,66 +1,8 @@
-import pytest
 from unittest.mock import patch, call
-from starlette.testclient import TestClient
 from fastapi.encoders import jsonable_encoder
 from abstractor.app.main import EventHandler
 from mock_services import *
 import abstractor
-
-
-dir_path = Path(os.path.dirname(os.path.realpath(__file__)))
-
-
-@pytest.fixture(scope="module")
-def client() -> TestClient:
-    return TestClient(app)
-
-
-@pytest.fixture(scope="module")
-def schema_0() -> AbstractionSchema:
-    json_text = Path(dir_path / "data/schema-0.json").read_text()
-    json_dict = json.loads(json_text)
-    schema = AbstractionSchema(**json_dict)
-    return schema
-
-
-@pytest.fixture(scope="module")
-def schema_1() -> AbstractionSchema:
-    json_text = Path(dir_path / "data/schema-1.json").read_text()
-    json_dict = json.loads(json_text)
-    schema = AbstractionSchema(**json_dict)
-    return schema
-
-
-@pytest.fixture(scope="module")
-def schema_2() -> AbstractionSchema:
-    json_text = Path(dir_path / "data/schema-2.json").read_text()
-    json_dict = json.loads(json_text)
-    schema = AbstractionSchema(**json_dict)
-    return schema
-
-
-@pytest.fixture(scope="module")
-def request_1() -> SuggestRequest:
-    json_text = Path(dir_path / "data/request-1.json").read_text()
-    json_dict = json.loads(json_text)
-    request = SuggestRequest(**json_dict)
-    return request
-
-
-@pytest.fixture(scope="module")
-def suggestion_1() -> SuggestRequest:
-    json_text = Path(dir_path / "data/suggestion-1.json").read_text()
-    json_dict = json.loads(json_text)
-    suggestion = Suggestion(**json_dict)
-    return suggestion
-
-
-@pytest.fixture(scope="module")
-def suggestion_2() -> SuggestRequest:
-    json_text = Path(dir_path / "data/suggestion-2.json").read_text()
-    json_dict = json.loads(json_text)
-    suggestion = Suggestion(**json_dict)
-    return suggestion
 
 
 def test_smoke(client):
@@ -176,34 +118,3 @@ def test_multiple_suggest(
         ),
     ]
     assert mock_suggest.mock_calls == expected
-
-
-@patch.object(
-    abstractor.app.main.EventHandler, "submit_suggestion", name="mock_submit_suggestion"
-)
-@patch.object(
-    abstractor.app.main.EventHandler,
-    "get_abstraction_schema",
-    name="mock_get_abstraction_schema",
-)
-def test_nlp_plugin(
-    mock_get,
-    mock_suggest,
-    client,
-    request_1,
-    schema_1,
-    schema_2,
-    suggestion_1,
-    suggestion_2,
-):
-
-    mock_get.side_effect = [schema_1, schema_2]
-    mock_suggest.return_value = None
-
-    response = client.post(
-        "/multiple_suggest",
-        json=jsonable_encoder(request_1),
-    )
-    ic(response)
-    assert response.status_code == 201
-    assert response.json() == {"msg": "request accepted"}

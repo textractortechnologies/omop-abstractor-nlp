@@ -10,12 +10,12 @@ def extract_suggestions(
     sections: Optional[List[AbstractorSection]] = None,
 ) -> bool:
     s = Suggestion(
-        abstractor_abstraction_source_id=0,
-        source_id=0,
-        source_type="",
-        source_method="",
-        value="",
+        abstractor_abstraction_source_id=11,
+        source_id=13,
+        source_type="mock",
+        source_method="mock",
+        value="foo",
         suggestion_sources=[],
     )
     ic(s)
-    return [s, s, s]
+    return [s]
