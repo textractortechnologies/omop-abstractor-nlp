@@ -1,7 +1,7 @@
 import pluggy
 import abstractor
 from typing import Tuple
-from fastapi import BackgroundTasks
+from fastapi import BackgroundTasks, HTTPException
 from fastapi.encoders import jsonable_encoder
 from icecream import ic
 from abstractor.app.dataclasses import *
@@ -42,7 +42,9 @@ def multiple_suggest(background_tasks: BackgroundTasks, request: SuggestRequest)
 
 class EventHandler:
     """
-    EventHandler
+    EventHandler class
+    Note: Gathering the event handing functions here makes it easier to test and mock
+    this functionality
     """
 
     # TODO: check out https://docs.python.org/dev/library/functools.html#functools.lru_cache
@@ -58,18 +60,22 @@ class EventHandler:
         :return:
         """
         schema_uri = schema_metadata.abstractor_abstraction_schema_uri
+
+        # first check to see if schema is cached, and if so compare update times
         if schema_uri in EventHandler.schema_cache:
-            meta, schema = EventHandler.schema_cache[schema_uri]
-            if meta.updated_at <= meta.updated_at:
-                return schema
+            m, s = EventHandler.schema_cache[schema_uri]
+            if schema_metadata.updated_at <= m.updated_at:
+                return s
 
-        resp = requests.get(schema_metadata.abstractor_abstraction_schema_uri)
+        # fetch a new schema if we don't have a valid cached schema
+        resp = requests.get(schema_uri)
         if resp.ok is True:
-            schema = AbstractionSchema(**resp.json())
-            EventHandler.schema_cache[schema_uri] = (schema_metadata, schema)
-            return schema
+            s = AbstractionSchema(**resp.json())
+            EventHandler.schema_cache[schema_uri] = (schema_metadata, s)
+            return s
 
-        return None
+        # if we've gotten here, there's been an issue getting the schema
+        raise HTTPException(status_code=404, detail=f"schema not found: {schema_uri}")
 
     @staticmethod
     def run_nlp(request: SuggestRequest, schema: AbstractionSchema) -> List[Suggestion]:
