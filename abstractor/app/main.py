@@ -4,6 +4,7 @@ from fastapi import FastAPI, BackgroundTasks, Depends, HTTPException
 from fastapi.encoders import jsonable_encoder
 from icecream import ic
 from abstractor.app.dataclasses import *
+from abstractor.nlp.host import get_plugin_manager
 
 app = FastAPI()
 
@@ -37,6 +38,8 @@ class EventHandler:
     # TODO: check out https://docs.python.org/dev/library/functools.html#functools.lru_cache
     schema_cache: Dict[str, Tuple[AbstractionSchemaMetaData, AbstractionSchema]] = {}
 
+    pm = get_plugin_manager()
+
     @staticmethod
     def get_abstraction_schema(
         schema_metadata: AbstractionSchemaMetaData,
@@ -68,7 +71,9 @@ class EventHandler:
         :param schema:
         :return:
         """
-        return []
+        return EventHandler.pm.hook.extract_suggestions(
+            text=request.text, schema=schema, sections=request.abstractor_sections
+        )
 
     @staticmethod
     def submit_suggestion(
@@ -99,7 +104,6 @@ class EventHandler:
                     f"schema not found: {schema_metadata.abstractor_abstraction_schema_uri}"
                 )
             else:
-                suggestions = EventHandler.run_nlp(request, schema)
-                ic(len(suggestions))
+                suggestions = EventHandler.run_nlp(request=request, schema=schema)
                 for suggestion in suggestions:
                     EventHandler.submit_suggestion(suggestion, schema_metadata)

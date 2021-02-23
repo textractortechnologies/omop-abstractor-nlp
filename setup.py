@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="omop-abstractor-nlp",
+    name="omop_abstractor_nlp",
     version="0.1.0",
     author="Will Thompson",
     author_email="wkt@northwestern.edu",
