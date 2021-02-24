@@ -93,7 +93,6 @@ def test_multiple_suggest(
         "/multiple_suggest",
         json=jsonable_encoder(request_1),
     )
-    ic(response)
     assert response.status_code == 201
     assert response.json() == {"msg": "request accepted"}
 

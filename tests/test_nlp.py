@@ -1,6 +1,6 @@
 from unittest.mock import patch, call
+from icecream import ic
 from fastapi.encoders import jsonable_encoder
-from abstractor.app.main import EventHandler
 import abstractor
 import nlp_impl
 
@@ -34,3 +34,19 @@ def test_nlp_plugin(
     )
     assert response.status_code == 201
     assert response.json() == {"msg": "request accepted"}
+
+    expected = [
+        call.submit_suggestion(
+            suggestion_1, request_1.abstractor_abstraction_schemas[0]
+        ),
+        call.submit_suggestion(
+            suggestion_2, request_1.abstractor_abstraction_schemas[0]
+        ),
+        call.submit_suggestion(
+            suggestion_1, request_1.abstractor_abstraction_schemas[1]
+        ),
+        call.submit_suggestion(
+            suggestion_2, request_1.abstractor_abstraction_schemas[1]
+        ),
+    ]
+    assert mock_suggest.mock_calls == expected

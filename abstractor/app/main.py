@@ -85,9 +85,10 @@ class EventHandler:
         :param schema:
         :return:
         """
-        return plugin_manager.hook.extract_suggestions(
+        suggestions = plugin_manager.hook.extract_suggestions(
             text=request.text, schema=schema, sections=request.abstractor_sections
         )
+        return suggestions[0]
 
     @staticmethod
     def submit_suggestion(
@@ -111,7 +112,6 @@ class EventHandler:
         :return:
         """
         for schema_metadata in request.abstractor_abstraction_schemas:
-            ic(schema_metadata.abstractor_abstraction_schema_id)
             schema = EventHandler.get_abstraction_schema(schema_metadata)
             if schema is None:
                 raise Exception(
@@ -119,5 +119,6 @@ class EventHandler:
                 )
             else:
                 suggestions = EventHandler.run_nlp(request, schema)
+                assert type(suggestions) == list
                 for suggestion in suggestions:
                     EventHandler.submit_suggestion(suggestion, schema_metadata)

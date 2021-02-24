@@ -85,7 +85,6 @@ class SuggestionSource(BaseModel):
 
 ########################################################################################################################
 # POST https://moomin.com/abstractor_abstractions/:abstractor_abstraction_id/abstractor_suggestions(.:format)
-# TODO: one post call per suggestion to return
 ########################################################################################################################
 
 
