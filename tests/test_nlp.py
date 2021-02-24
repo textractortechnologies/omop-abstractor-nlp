@@ -6,10 +6,12 @@ import nlp_impl
 
 
 @patch.object(
-    abstractor.app.main.EventHandler, "submit_suggestion", name="mock_submit_suggestion"
+    abstractor.app.events.EventHandler,
+    "submit_suggestion",
+    name="mock_submit_suggestion",
 )
 @patch.object(
-    abstractor.app.main.EventHandler,
+    abstractor.app.events.EventHandler,
     "get_abstraction_schema",
     name="mock_get_abstraction_schema",
 )
