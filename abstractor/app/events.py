@@ -63,10 +63,12 @@ class EventHandler:
         :param schema:
         :return:
         """
-        suggestions = plugin_manager.hook.extract_suggestions(
+        suggestion_sets = plugin_manager.hook.extract_suggestions(
             text=request.text, schema=schema, sections=request.abstractor_sections
         )
-        return suggestions[0]
+        suggestions = []
+        [suggestions.extend(s) for s in suggestion_sets]
+        return suggestions
 
     @staticmethod
     def submit_suggestion(
@@ -79,7 +81,7 @@ class EventHandler:
         :return:
         """
         suggest_uri = schema_metadata.abstractor_abstraction_abstractor_suggestions_uri
-        resp = requests.post(suggest_uri, data=jsonable_encoder(suggestion))
+        resp = requests.post(suggest_uri, json=jsonable_encoder(suggestion))
         return resp.ok is True
 
     @staticmethod
@@ -98,5 +100,7 @@ class EventHandler:
             else:
                 suggestions = EventHandler.run_nlp(request, schema)
                 assert type(suggestions) == list
+                for e in suggestions:
+                    assert isinstance(e, Suggestion)
                 for suggestion in suggestions:
                     EventHandler.submit_suggestion(suggestion, schema_metadata)

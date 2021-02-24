@@ -10,21 +10,21 @@ def test_smoke(client):
     assert response.json() == {"msg": "OMOP Abstractor NLP Service"}
 
 
-def test_abstraction_schema_service(client, schema_1, schema_2):
-    response = client.get(f"/abstractor_abstraction_schemas/{'schema-1.json'}")
-    assert response.ok is True
-    schema = AbstractionSchema(**response.json())
-    assert schema == schema_1
-
-    response = client.get(f"/abstractor_abstraction_schemas/{'schema-2.json'}")
-    assert response.ok is True
-    schema = AbstractionSchema(**response.json())
-    assert schema == schema_2
-
-    response = client.get(f"/abstractor_abstraction_schemas/{'schema-3.json'}")
-    assert response.ok is False
-    assert response.status_code == 404
-    assert response.json() == {"detail": "schema not found: schema-3.json"}
+# def test_abstraction_schema_service(client, schema_1, schema_2):
+#     response = client.get(f"/abstractor_abstraction_schemas/{'schema-1.json'}")
+#     assert response.ok is True
+#     schema = AbstractionSchema(**response.json())
+#     assert schema == schema_1
+#
+#     response = client.get(f"/abstractor_abstraction_schemas/{'schema-2.json'}")
+#     assert response.ok is True
+#     schema = AbstractionSchema(**response.json())
+#     assert schema == schema_2
+#
+#     response = client.get(f"/abstractor_abstraction_schemas/{'schema-3.json'}")
+#     assert response.ok is False
+#     assert response.status_code == 404
+#     assert response.json() == {"detail": "schema not found: schema-3.json"}
 
 
 def test_suggestion_service(client, suggestion_1, suggestion_2):
@@ -53,14 +53,14 @@ def test_test_multiple_suggest(client, request_1):
         json=jsonable_encoder(request_1),
     )
     assert response.ok is True
-    assert response.json() == {"msg": "request accepted", "nlp": "default"}
+    assert response.json() == {"msg": "request accepted"}
 
     response = client.post(
-        f"/test_multiple_suggest?nlp_type=special",
+        f"/test_multiple_suggest",
         json=jsonable_encoder(request_1),
     )
     assert response.ok is True
-    assert response.json() == {"msg": "request accepted", "nlp": "special"}
+    assert response.json() == {"msg": "request accepted"}
 
 
 @patch.object(

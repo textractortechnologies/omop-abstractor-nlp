@@ -15,6 +15,11 @@ json_text = Path(dir_path / "data/schema-2.json").read_text()
 schema_2 = AbstractionSchema(**json.loads(json_text))
 
 
+@app.post("/test_multiple_suggest", status_code=201)
+def multiple_suggest(background_tasks: BackgroundTasks, request: SuggestRequest):
+    return {"msg": f"request accepted"}
+
+
 @app.get(
     "/abstractor_abstraction_schemas/{schema_id}",
     status_code=201,
@@ -35,15 +40,3 @@ def get_abstraction_schema(schema_id: str) -> AbstractionSchema:
 def accept_suggestion(abstractor_abstraction_id: int, suggestion: Suggestion):
     ic(abstractor_abstraction_id)
     return {"msg": f"accepted suggestion {suggestion.abstractor_abstraction_source_id}"}
-
-
-class NLP:
-    def __init__(self, nlp_type: Optional[str] = "default"):
-        self.type = nlp_type
-
-
-@app.post("/test_multiple_suggest", status_code=201)
-def multiple_suggest(
-    background_tasks: BackgroundTasks, request: SuggestRequest, nlp: NLP = Depends()
-):
-    return {"msg": f"request accepted", "nlp": nlp.type}

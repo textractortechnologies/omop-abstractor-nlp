@@ -25,7 +25,7 @@ def test_nlp_plugin(
     suggestion_1,
     suggestion_2,
 ):
-    abstractor.app.main.plugin_manager.register(nlp_impl)
+    abstractor.app.events.plugin_manager.register(nlp_impl)
 
     mock_get.side_effect = [schema_1, schema_2]
     mock_suggest.return_value = None
