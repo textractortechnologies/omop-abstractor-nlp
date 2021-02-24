@@ -25,6 +25,11 @@ def test_nlp_plugin(
     suggestion_1,
     suggestion_2,
 ):
+    # block any currently resistered plugins
+    for n in abstractor.app.events.plugin_manager.list_name_plugin():
+        abstractor.app.events.plugin_manager.set_blocked(n[0])
+
+    # register the test plugin
     abstractor.app.events.plugin_manager.register(nlp_impl)
 
     mock_get.side_effect = [schema_1, schema_2]
