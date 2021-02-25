@@ -9,4 +9,4 @@ COPY ./setup.py /app
 COPY ./abstractor/app/main.py /app/main.py
 
 RUN pip install .
-RUN python -m spacy download en_core_web_md
+

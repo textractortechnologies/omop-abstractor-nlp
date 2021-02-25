@@ -3,6 +3,7 @@ from typing import List, Optional
 import abstractor
 from abstractor.app.dataclasses import *
 
+
 hookspec = pluggy.HookspecMarker(abstractor.PROJECT_NAME)
 
 

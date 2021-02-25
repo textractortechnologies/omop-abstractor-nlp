@@ -12,16 +12,13 @@ setup(
     include_package_data=True,
     install_requires=[
         "requests",
-        "celery",
-        "rabbitmq",
         "icecream",
-        "pandas",
-        "regex",
         "pluggy",
         "pyyaml",
         "fastapi",
         "uvicorn",
-        "spacy>=3"
+        # "celery",
+        # "rabbitmq",
     ],
     extras_require={"interactive": ["jupyterlab", "rise"]},
     setup_requires=["black"],
