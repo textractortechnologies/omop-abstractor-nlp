@@ -94,7 +94,7 @@ def test_multiple_suggest(
         "/multiple_suggest",
         json=jsonable_encoder(request_1),
     )
-    assert response.status_code == 201
+    assert response.status_code == 200
     assert response.json() == {"msg": "request accepted"}
 
     mock_get.assert_called()

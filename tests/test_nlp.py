@@ -39,7 +39,7 @@ def test_nlp_plugin(
         "/multiple_suggest",
         json=jsonable_encoder(request_1),
     )
-    assert response.status_code == 201
+    assert response.status_code == 200
     assert response.json() == {"msg": "request accepted"}
 
     expected = [

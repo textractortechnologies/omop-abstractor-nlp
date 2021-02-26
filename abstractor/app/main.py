@@ -6,7 +6,7 @@ from abstractor.app.dataclasses import *
 app = FastAPI()
 
 
-@app.get("/", status_code=201)
+@app.get("/", status_code=200)
 def greeting():
     """
     greeting
@@ -15,7 +15,7 @@ def greeting():
     return {"msg": "OMOP Abstractor NLP Service"}
 
 
-@app.post("/multiple_suggest", status_code=201)
+@app.post("/multiple_suggest", status_code=200)
 def multiple_suggest(background_tasks: BackgroundTasks, request: SuggestRequest):
     """
     multiple_suggest
@@ -30,7 +30,7 @@ def multiple_suggest(background_tasks: BackgroundTasks, request: SuggestRequest)
 
 @app.get(
     "/abstractor_abstraction_schemas/{schema_id}",
-    status_code=201,
+    status_code=200,
     response_model=AbstractionSchema,
 )
 def get_abstraction_schema_stub(schema_id: str) -> AbstractionSchema:
@@ -47,7 +47,7 @@ def get_abstraction_schema_stub(schema_id: str) -> AbstractionSchema:
 
 @app.post(
     "/abstractor_abstractions/{abstractor_abstraction_id}/abstractor_suggestions.json",
-    status_code=201,
+    status_code=200,
 )
 def accept_suggestion_stub(abstractor_abstraction_id: int, suggestion: Suggestion):
     ic(abstractor_abstraction_id)
