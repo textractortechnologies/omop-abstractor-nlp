@@ -35,5 +35,5 @@ def extract_suggestions(
     text: str,
     schema: AbstractionSchema,
     sections: Optional[List[AbstractorSection]] = None,
-) -> List[SuggestionSource]:
-    return suggestion1.suggestion_sources
+) -> Dict[str, List[SuggestionSource]]:
+    return {suggestion1.value: suggestion1.suggestion_sources}

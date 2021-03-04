@@ -63,21 +63,19 @@ class EventHandler:
         :param schema:
         :return:
         """
-        suggestion_source_sets = plugin_manager.hook.extract_suggestions(
+        suggestion_source_dicts = plugin_manager.hook.extract_suggestions(
             text=request.text, schema=schema, sections=request.abstractor_sections
         )
         suggestions = []
-        for suggestion_source_set in suggestion_source_sets:
-            for suggestion_source in suggestion_source_set:
-                # TODO: consolidate suggestions with same value
+        for suggestion_source_dict in suggestion_source_dicts:
+            for k, v in suggestion_source_dict.items():
                 suggestion = Suggestion(
                     abstractor_abstraction_source_id=0,  # TODO: extract from schema metadata
                     source_id=request.source_id,
                     source_type=request.source_type,
                     source_method=request.source_method,
-                    value="TODO",
-                    negated=False,  # TODO: extract from suggestion source
-                    suggestion_sources=[suggestion_source],
+                    value=k,
+                    suggestion_sources=v,
                 )
                 suggestions.append(suggestion)
         return suggestions

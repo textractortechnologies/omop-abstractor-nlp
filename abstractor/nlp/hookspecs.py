@@ -12,11 +12,11 @@ def extract_suggestions(
     text: str,
     schema: AbstractionSchema,
     sections: Optional[List[AbstractorSection]] = None,
-) -> List[SuggestionSource]:
+) -> Dict[str, List[SuggestionSource]]:
     """
-
+    Extract suggestions
     :param text:
     :param schema:
     :param sections:
-    :return: List[SuggestionSource]
+    :return: Dict[str, List[SuggestionSource]]
     """
