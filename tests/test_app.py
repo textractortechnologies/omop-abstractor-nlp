@@ -86,7 +86,7 @@ def test_multiple_suggest(
     suggestion_2,
 ):
 
-    mock_get.side_effect = [schema_1, schema_2]
+    mock_get.side_effect = [(schema_1, True), (schema_2, True)]
     mock_nlp.side_effect = [[suggestion_1], [suggestion_2]]
     mock_suggest.return_value = None
 
@@ -106,8 +106,8 @@ def test_multiple_suggest(
 
     mock_nlp.assert_called()
     expected = [
-        call.run_nlp(request_1, schema_1, 0),
-        call.run_nlp(request_1, schema_2, 1),
+        call.run_nlp(request_1, schema_1, 0, True),
+        call.run_nlp(request_1, schema_2, 1, True),
     ]
     assert mock_nlp.mock_calls == expected
 

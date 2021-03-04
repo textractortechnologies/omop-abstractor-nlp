@@ -34,7 +34,7 @@ def test_nlp_plugin(
     # register the test plugin
     abstractor.app.events.plugin_manager.register(nlp_impl)
 
-    mock_get.side_effect = [schema_1, schema_2]
+    mock_get.side_effect = [(schema_1, True), (schema_2, True)]
     mock_suggest.return_value = None
 
     response = client.post(

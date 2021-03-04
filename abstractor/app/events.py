@@ -31,7 +31,7 @@ class EventHandler:
     @staticmethod
     def get_abstraction_schema(
         schema_metadata: AbstractionSchemaMetaData,
-    ) -> AbstractionSchema:
+    ) -> Tuple[AbstractionSchema, bool]:
         """
         get_abstraction_schema
         :param schema_metadata:
@@ -43,30 +43,31 @@ class EventHandler:
         if schema_uri in EventHandler.schema_cache:
             m, s = EventHandler.schema_cache[schema_uri]
             if schema_metadata.updated_at <= m.updated_at:
-                return s
+                return s, False
 
         # fetch a new schema if we don't have a valid cached schema
         resp = requests.get(schema_uri)
         if resp.ok is True:
             s = AbstractionSchema(**resp.json())
             EventHandler.schema_cache[schema_uri] = (schema_metadata, s)
-            return s
+            return s, True
 
         # if we've gotten here, there's been an issue getting the schema
         raise HTTPException(status_code=404, detail=f"schema not found: {schema_uri}")
 
     @staticmethod
     def run_nlp(
-        request: SuggestRequest, schema: AbstractionSchema, schema_metadata_idx: int
+        request: SuggestRequest, schema: AbstractionSchema, schema_metadata_idx: int, updated: bool
     ) -> List[Suggestion]:
         """
         run_nlp
         :param request:
         :param schema:
+        :param updated:
         :return:
         """
         suggestion_source_dicts = plugin_manager.hook.extract_suggestions(
-            text=request.text, schema=schema, sections=request.abstractor_sections
+            text=request.text, schema=schema, updated=updated, sections=request.abstractor_sections
         )
         suggestions = []
         for suggestion_source_dict in suggestion_source_dicts:
@@ -106,15 +107,10 @@ class EventHandler:
         :return:
         """
         for idx, schema_metadata in enumerate(request.abstractor_abstraction_schemas):
-            schema = EventHandler.get_abstraction_schema(schema_metadata)
-            if schema is None:
-                raise Exception(
-                    f"schema not found: {schema_metadata.abstractor_abstraction_schema_uri}"
-                )
-            else:
-                suggestions = EventHandler.run_nlp(request, schema, idx)
-                assert type(suggestions) == list
-                for e in suggestions:
-                    assert isinstance(e, Suggestion)
-                for suggestion in suggestions:
-                    EventHandler.submit_suggestion(suggestion, schema_metadata)
+            schema, updated = EventHandler.get_abstraction_schema(schema_metadata)
+            suggestions = EventHandler.run_nlp(request, schema, idx, updated)
+            assert type(suggestions) == list
+            for e in suggestions:
+                assert isinstance(e, Suggestion)
+            for suggestion in suggestions:
+                EventHandler.submit_suggestion(suggestion, schema_metadata)
