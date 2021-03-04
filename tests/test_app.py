@@ -105,7 +105,10 @@ def test_multiple_suggest(
     assert mock_get.mock_calls == expected
 
     mock_nlp.assert_called()
-    expected = [call.run_nlp(request_1, schema_1), call.run_nlp(request_1, schema_2)]
+    expected = [
+        call.run_nlp(request_1, schema_1, 0),
+        call.run_nlp(request_1, schema_2, 1),
+    ]
     assert mock_nlp.mock_calls == expected
 
     mock_suggest.assert_called()

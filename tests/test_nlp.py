@@ -47,7 +47,7 @@ def test_nlp_plugin(
     expected = [
         call(
             Suggestion(
-                abstractor_abstraction_source_id=0,
+                abstractor_abstraction_source_id=5403,
                 source_id=2049,
                 source_type="NoteStableIdentifier",
                 source_method="note_text",
@@ -92,7 +92,7 @@ def test_nlp_plugin(
         ),
         call(
             Suggestion(
-                abstractor_abstraction_source_id=0,
+                abstractor_abstraction_source_id=5404,
                 source_id=2049,
                 source_type="NoteStableIdentifier",
                 source_method="note_text",

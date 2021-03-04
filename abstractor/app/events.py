@@ -56,7 +56,9 @@ class EventHandler:
         raise HTTPException(status_code=404, detail=f"schema not found: {schema_uri}")
 
     @staticmethod
-    def run_nlp(request: SuggestRequest, schema: AbstractionSchema) -> List[Suggestion]:
+    def run_nlp(
+        request: SuggestRequest, schema: AbstractionSchema, schema_metadata_idx: int
+    ) -> List[Suggestion]:
         """
         run_nlp
         :param request:
@@ -70,7 +72,9 @@ class EventHandler:
         for suggestion_source_dict in suggestion_source_dicts:
             for k, v in suggestion_source_dict.items():
                 suggestion = Suggestion(
-                    abstractor_abstraction_source_id=0,  # TODO: extract from schema metadata
+                    abstractor_abstraction_source_id=request.abstractor_abstraction_schemas[
+                        schema_metadata_idx
+                    ].abstractor_abstraction_source_id,
                     source_id=request.source_id,
                     source_type=request.source_type,
                     source_method=request.source_method,
@@ -101,14 +105,14 @@ class EventHandler:
         :param request:
         :return:
         """
-        for schema_metadata in request.abstractor_abstraction_schemas:
+        for idx, schema_metadata in enumerate(request.abstractor_abstraction_schemas):
             schema = EventHandler.get_abstraction_schema(schema_metadata)
             if schema is None:
                 raise Exception(
                     f"schema not found: {schema_metadata.abstractor_abstraction_schema_uri}"
                 )
             else:
-                suggestions = EventHandler.run_nlp(request, schema)
+                suggestions = EventHandler.run_nlp(request, schema, idx)
                 assert type(suggestions) == list
                 for e in suggestions:
                     assert isinstance(e, Suggestion)
