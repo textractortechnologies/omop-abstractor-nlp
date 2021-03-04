@@ -12,11 +12,11 @@ def extract_suggestions(
     text: str,
     schema: AbstractionSchema,
     sections: Optional[List[AbstractorSection]] = None,
-) -> List[Suggestion]:
+) -> List[SuggestionSource]:
     """
 
     :param text:
     :param schema:
     :param sections:
-    :return: List[Suggestion]
+    :return: List[SuggestionSource]
     """

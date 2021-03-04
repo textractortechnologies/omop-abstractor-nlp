@@ -75,26 +75,26 @@ class SuggestRequest(BaseModel):
     abstractor_sections: List[AbstractorSection]
 
 
-class SuggestionSource(BaseModel):
-    match_value: str
-    sentence_match_value: str
-    section_name: str
-    section_name_begin: int
-    section_name_end: int
-
-
 ########################################################################################################################
 # POST https://moomin.com/abstractor_abstractions/:abstractor_abstraction_id/abstractor_suggestions(.:format)
 ########################################################################################################################
 
 
+class SuggestionSource(BaseModel):
+    match_value: str
+    sentence_match_value: str
+    section_name: str  # canonical name of section (not the variant name)
+    section_name_begin: int  # start offset of matched header
+    section_name_end: int  # end of entire section
+
+
 class Suggestion(BaseModel):
-    abstractor_abstraction_source_id: int
-    source_id: int
-    source_type: str
-    source_method: str
-    value: str
-    unknown: Optional[bool] = None
-    not_applicable: Optional[bool] = None
-    negated: bool = False
+    abstractor_abstraction_source_id: int  # from schema metadata in request (named identically)
+    source_id: int  # request source id
+    source_type: str  # request source type
+    source_method: str  # request source method
+    value: str  # object value value from the schema (or number or date, depending on type)
+    unknown: Optional[bool] = None  # no suggestions
+    not_applicable: Optional[bool] = None  # leave as None
+    negated: bool = False  # nlp says mention is negated
     suggestion_sources: List[SuggestionSource]

@@ -1,6 +1,8 @@
 from unittest.mock import patch, call
 from icecream import ic
 from fastapi.encoders import jsonable_encoder
+from abstractor.app.dataclasses import *
+import datetime
 import abstractor
 import nlp_impl
 
@@ -42,18 +44,152 @@ def test_nlp_plugin(
     assert response.status_code == 200
     assert response.json() == {"msg": "request accepted"}
 
+    ic(mock_suggest.mock_calls)
+
     expected = [
-        call.submit_suggestion(
-            suggestion_1, request_1.abstractor_abstraction_schemas[0]
+        call(
+            Suggestion(
+                abstractor_abstraction_source_id=0,
+                source_id=2049,
+                source_type="NoteStableIdentifier",
+                source_method="note_text",
+                value="TODO",
+                unknown=None,
+                not_applicable=None,
+                negated=False,
+                suggestion_sources=[
+                    SuggestionSource(
+                        match_value="glioblastoma",
+                        sentence_match_value="The patient has a diagnosis of glioblastoma.",
+                        section_name="SPECIMEN",
+                        section_name_begin=1,
+                        section_name_end=25,
+                    )
+                ],
+            ),
+            AbstractionSchemaMetaData(
+                abstractor_abstraction_schema_id=1,
+                abstractor_abstraction_schema_uri="http://localhost:8000/abstractor_abstraction_schemas/schema-1.json",
+                abstractor_abstraction_abstractor_suggestions_uri="http://localhost:8000/abstractor_abstractions/10577/abstractor_suggestions.json",
+                abstractor_abstraction_id=10577,
+                abstractor_abstraction_source_id=5403,
+                abstractor_subject_id=5403,
+                namespace_type="Abstractor::AbstractorNamespace",
+                namespace_id=488,
+                abstractor_rule_type="value",
+                abstractor_object_type="list",
+                updated_at=datetime.datetime(
+                    2020, 10, 6, 20, 56, 40, tzinfo=datetime.timezone.utc
+                ),
+            ),
         ),
-        call.submit_suggestion(
-            suggestion_2, request_1.abstractor_abstraction_schemas[0]
+        call(
+            Suggestion(
+                abstractor_abstraction_source_id=0,
+                source_id=2049,
+                source_type="NoteStableIdentifier",
+                source_method="note_text",
+                value="TODO",
+                unknown=None,
+                not_applicable=None,
+                negated=False,
+                suggestion_sources=[
+                    SuggestionSource(
+                        match_value="gbm",
+                        sentence_match_value="GBM does not have a good prognosis.",
+                        section_name="SPECIMEN",
+                        section_name_begin=1,
+                        section_name_end=25,
+                    )
+                ],
+            ),
+            AbstractionSchemaMetaData(
+                abstractor_abstraction_schema_id=1,
+                abstractor_abstraction_schema_uri="http://localhost:8000/abstractor_abstraction_schemas/schema-1.json",
+                abstractor_abstraction_abstractor_suggestions_uri="http://localhost:8000/abstractor_abstractions/10577/abstractor_suggestions.json",
+                abstractor_abstraction_id=10577,
+                abstractor_abstraction_source_id=5403,
+                abstractor_subject_id=5403,
+                namespace_type="Abstractor::AbstractorNamespace",
+                namespace_id=488,
+                abstractor_rule_type="value",
+                abstractor_object_type="list",
+                updated_at=datetime.datetime(
+                    2020, 10, 6, 20, 56, 40, tzinfo=datetime.timezone.utc
+                ),
+            ),
         ),
-        call.submit_suggestion(
-            suggestion_1, request_1.abstractor_abstraction_schemas[1]
+        call(
+            Suggestion(
+                abstractor_abstraction_source_id=0,
+                source_id=2049,
+                source_type="NoteStableIdentifier",
+                source_method="note_text",
+                value="TODO",
+                unknown=None,
+                not_applicable=None,
+                negated=False,
+                suggestion_sources=[
+                    SuggestionSource(
+                        match_value="glioblastoma",
+                        sentence_match_value="The patient has a diagnosis of glioblastoma.",
+                        section_name="SPECIMEN",
+                        section_name_begin=1,
+                        section_name_end=25,
+                    )
+                ],
+            ),
+            AbstractionSchemaMetaData(
+                abstractor_abstraction_schema_id=2,
+                abstractor_abstraction_schema_uri="http://localhost:8000/abstractor_abstraction_schemas/schema-2.json",
+                abstractor_abstraction_abstractor_suggestions_uri="http://localhost:8000/abstractor_abstractions/10578/abstractor_suggestions.json",
+                abstractor_abstraction_id=10578,
+                abstractor_abstraction_source_id=5404,
+                abstractor_subject_id=5404,
+                namespace_type="Abstractor::AbstractorNamespace",
+                namespace_id=488,
+                abstractor_rule_type="value",
+                abstractor_object_type="list",
+                updated_at=datetime.datetime(
+                    2020, 10, 6, 20, 56, 42, tzinfo=datetime.timezone.utc
+                ),
+            ),
         ),
-        call.submit_suggestion(
-            suggestion_2, request_1.abstractor_abstraction_schemas[1]
+        call(
+            Suggestion(
+                abstractor_abstraction_source_id=0,
+                source_id=2049,
+                source_type="NoteStableIdentifier",
+                source_method="note_text",
+                value="TODO",
+                unknown=None,
+                not_applicable=None,
+                negated=False,
+                suggestion_sources=[
+                    SuggestionSource(
+                        match_value="gbm",
+                        sentence_match_value="GBM does not have a good prognosis.",
+                        section_name="SPECIMEN",
+                        section_name_begin=1,
+                        section_name_end=25,
+                    )
+                ],
+            ),
+            AbstractionSchemaMetaData(
+                abstractor_abstraction_schema_id=2,
+                abstractor_abstraction_schema_uri="http://localhost:8000/abstractor_abstraction_schemas/schema-2.json",
+                abstractor_abstraction_abstractor_suggestions_uri="http://localhost:8000/abstractor_abstractions/10578/abstractor_suggestions.json",
+                abstractor_abstraction_id=10578,
+                abstractor_abstraction_source_id=5404,
+                abstractor_subject_id=5404,
+                namespace_type="Abstractor::AbstractorNamespace",
+                namespace_id=488,
+                abstractor_rule_type="value",
+                abstractor_object_type="list",
+                updated_at=datetime.datetime(
+                    2020, 10, 6, 20, 56, 42, tzinfo=datetime.timezone.utc
+                ),
+            ),
         ),
     ]
     assert mock_suggest.mock_calls == expected
