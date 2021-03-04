@@ -75,9 +75,7 @@ class EventHandler:
                     source_id=request.source_id,
                     source_type=request.source_type,
                     source_method=request.source_method,
-                    value="TODO",  # TODO: extract from schema entry
-                    unknown=None,
-                    not_applicable=None,
+                    value="TODO",
                     negated=False,  # TODO: extract from suggestion source
                     suggestion_sources=[suggestion_source],
                 )

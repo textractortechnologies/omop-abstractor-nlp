@@ -44,8 +44,6 @@ def test_nlp_plugin(
     assert response.status_code == 200
     assert response.json() == {"msg": "request accepted"}
 
-    ic(mock_suggest.mock_calls)
-
     expected = [
         call(
             Suggestion(

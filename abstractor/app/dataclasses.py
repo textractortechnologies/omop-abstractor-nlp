@@ -81,6 +81,7 @@ class SuggestRequest(BaseModel):
 
 
 class SuggestionSource(BaseModel):
+    negated: Optional[bool] = None
     match_value: str
     sentence_match_value: str
     section_name: str  # canonical name of section (not the variant name)
