@@ -9,17 +9,14 @@ hookspec = pluggy.HookspecMarker(abstractor.PROJECT_NAME)
 
 @hookspec
 def extract_suggestions(
-    text: str,
-    schema_metadata: AbstractionSchemaMetaData,
+    request: SuggestRequest,
     schema: AbstractionSchema,
-    sections: Optional[List[AbstractorSection]] = None,
+    schema_idx: int
 ) -> Dict[str, List[SuggestionSource]]:
     """
     Extract suggestions
-    :param text:
-    :param schema_metadata:
+    :param request:
     :param schema:
-    :param updated_schema:
-    :param sections:
-    :return: Dict[str, List[SuggestionSource]]
+    :param schema_idx:
+    :return:
     """

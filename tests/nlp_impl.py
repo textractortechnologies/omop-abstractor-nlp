@@ -32,8 +32,8 @@ suggestion2 = Suggestion(**json_dict)
 
 @abstractor.hookimpl
 def extract_suggestions(
-    text: str,
+    request: SuggestRequest,
     schema: AbstractionSchema,
-    sections: Optional[List[AbstractorSection]] = None,
+    schema_idx: int
 ) -> Dict[str, List[SuggestionSource]]:
     return {suggestion1.value: suggestion1.suggestion_sources}

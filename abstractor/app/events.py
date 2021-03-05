@@ -56,7 +56,7 @@ class EventHandler:
 
     @staticmethod
     def run_nlp(
-        request: SuggestRequest, schema: AbstractionSchema, schema_metadata_idx: int
+        request: SuggestRequest, schema: AbstractionSchema, schema_idx: int
     ) -> List[Suggestion]:
         """
         run_nlp
@@ -65,17 +65,16 @@ class EventHandler:
         :return:
         """
         suggestion_source_dicts = plugin_manager.hook.extract_suggestions(
-            text=request.text,
-            schema_metadata=request.abstractor_abstraction_schemas[schema_metadata_idx],
+            request=request,
             schema=schema,
-            sections=request.abstractor_sections,
+            schema_idx=schema_idx
         )
         suggestions = []
         for suggestion_source_dict in suggestion_source_dicts:
             for k, v in suggestion_source_dict.items():
                 suggestion = Suggestion(
                     abstractor_abstraction_source_id=request.abstractor_abstraction_schemas[
-                        schema_metadata_idx
+                        schema_idx
                     ].abstractor_abstraction_source_id,
                     source_id=request.source_id,
                     source_type=request.source_type,
