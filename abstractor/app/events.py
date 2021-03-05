@@ -25,13 +25,12 @@ class EventHandler:
     this functionality
     """
 
-    # TODO: check out https://docs.python.org/dev/library/functools.html#functools.lru_cache
     schema_cache: Dict[str, Tuple[AbstractionSchemaMetaData, AbstractionSchema]] = {}
 
     @staticmethod
     def get_abstraction_schema(
         schema_metadata: AbstractionSchemaMetaData,
-    ) -> Tuple[AbstractionSchema, bool]:
+    ) -> AbstractionSchema:
         """
         get_abstraction_schema
         :param schema_metadata:
@@ -43,31 +42,33 @@ class EventHandler:
         if schema_uri in EventHandler.schema_cache:
             m, s = EventHandler.schema_cache[schema_uri]
             if schema_metadata.updated_at <= m.updated_at:
-                return s, False
+                return s
 
         # fetch a new schema if we don't have a valid cached schema
         resp = requests.get(schema_uri)
         if resp.ok is True:
             s = AbstractionSchema(**resp.json())
             EventHandler.schema_cache[schema_uri] = (schema_metadata, s)
-            return s, True
+            return s
 
         # if we've gotten here, there's been an issue getting the schema
         raise HTTPException(status_code=404, detail=f"schema not found: {schema_uri}")
 
     @staticmethod
     def run_nlp(
-        request: SuggestRequest, schema: AbstractionSchema, schema_metadata_idx: int, updated: bool
+        request: SuggestRequest, schema: AbstractionSchema, schema_metadata_idx: int
     ) -> List[Suggestion]:
         """
         run_nlp
         :param request:
         :param schema:
-        :param updated:
         :return:
         """
         suggestion_source_dicts = plugin_manager.hook.extract_suggestions(
-            text=request.text, schema=schema, updated=updated, sections=request.abstractor_sections
+            text=request.text,
+            schema_metadata=request.abstractor_abstraction_schemas[schema_metadata_idx],
+            schema=schema,
+            sections=request.abstractor_sections,
         )
         suggestions = []
         for suggestion_source_dict in suggestion_source_dicts:
@@ -107,8 +108,8 @@ class EventHandler:
         :return:
         """
         for idx, schema_metadata in enumerate(request.abstractor_abstraction_schemas):
-            schema, updated = EventHandler.get_abstraction_schema(schema_metadata)
-            suggestions = EventHandler.run_nlp(request, schema, idx, updated)
+            schema = EventHandler.get_abstraction_schema(schema_metadata)
+            suggestions = EventHandler.run_nlp(request, schema, idx)
             assert type(suggestions) == list
             for e in suggestions:
                 assert isinstance(e, Suggestion)
