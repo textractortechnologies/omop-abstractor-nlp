@@ -22,5 +22,5 @@ setup(
     ],
     extras_require={"interactive": ["jupyterlab", "rise"]},
     setup_requires=["black"],
-    tests_require=["pytest"],
+    tests_require=["pytest", "pyhamcrest"],
 )

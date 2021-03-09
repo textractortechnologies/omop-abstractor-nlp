@@ -65,9 +65,7 @@ class EventHandler:
         :return:
         """
         suggestion_source_dicts = plugin_manager.hook.extract_suggestions(
-            request=request,
-            schema=schema,
-            schema_idx=schema_idx
+            request=request, schema=schema, schema_idx=schema_idx
         )
         suggestions = []
         for suggestion_source_dict in suggestion_source_dicts:

@@ -16,6 +16,10 @@
 			"case_sensitive": "false",
 			"object_value_variants": [
 				{
+					"value": "glioblastoma",
+					"case_sensitive": "false"
+				},
+				{
 					"value": "GBM",
 					"case_sensitive": "true"
 				}
