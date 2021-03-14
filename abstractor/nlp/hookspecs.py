@@ -1,5 +1,4 @@
 import pluggy
-from typing import List, Optional
 import abstractor
 from abstractor.app.dataclasses import *
 
