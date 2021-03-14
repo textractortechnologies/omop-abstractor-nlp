@@ -7,20 +7,21 @@ setup(
     author_email="wkt@northwestern.edu",
     maintainer="Will Thompson",
     maintainer_email="wkt@northwestern.edu",
-    description="NLP interface code for the OMOP Abstractor",
+    description="NLP web service API code for the OMOP Abstractor",
     packages=find_packages(include=["abstractor", "abstractor.*"]),
     include_package_data=True,
     install_requires=[
-        "requests",
-        "icecream",
         "pluggy",
-        "pyyaml",
         "fastapi",
         "uvicorn",
+        "requests",
+        "pydantic",
         # "celery",
         # "rabbitmq",
     ],
-    extras_require={"interactive": ["jupyterlab", "rise"]},
-    setup_requires=["black", "pyment"],
-    tests_require=["pytest", "pyhamcrest"],
+    extras_require={
+        "interactive": ["jupyterlab", "rise"],
+        "tests": ["pytest", "pyhamcrest", "icecream", "starlette", "pyyaml"],
+        "dev": ["black", "pyment"]
+    },
 )

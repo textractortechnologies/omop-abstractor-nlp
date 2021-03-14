@@ -1,6 +1,4 @@
-import requests
 import datetime
-from fastapi import FastAPI, Body
 from pydantic import BaseModel
 from typing import List, Dict, Optional
 
@@ -12,12 +10,14 @@ from typing import List, Dict, Optional
 
 class Variant(BaseModel):
     """ """
+
     value: str
     case_sensitive: bool
 
 
 class Entry(BaseModel):
     """ """
+
     value: str
     properties: str = None
     vocabulary_code: str
@@ -29,6 +29,7 @@ class Entry(BaseModel):
 
 class AbstractionSchema(BaseModel):
     """ """
+
     predicate: str
     display_name: str
     abstractor_object_type: str
@@ -39,6 +40,7 @@ class AbstractionSchema(BaseModel):
 
 class AbstractionSchemaMetaData(BaseModel):
     """ """
+
     abstractor_abstraction_schema_id: int
     abstractor_abstraction_schema_uri: str
     abstractor_abstraction_abstractor_suggestions_uri: str
@@ -59,11 +61,13 @@ class AbstractionSchemaMetaData(BaseModel):
 
 class AbstractorSectionNameVariants(BaseModel):
     """ """
+
     name: str
 
 
 class AbstractorSection(BaseModel):
     """ """
+
     name: str
     section_mention_type: str
     section_name_variants: List[AbstractorSectionNameVariants]
@@ -71,6 +75,7 @@ class AbstractorSection(BaseModel):
 
 class SuggestRequest(BaseModel):
     """ """
+
     source_id: int
     source_type: str
     source_method: str
@@ -89,6 +94,7 @@ class SuggestRequest(BaseModel):
 
 class SuggestionSource(BaseModel):
     """ """
+
     negated: Optional[bool] = None
     match_value: str
     sentence_match_value: str
@@ -99,6 +105,7 @@ class SuggestionSource(BaseModel):
 
 class Suggestion(BaseModel):
     """ """
+
     abstractor_abstraction_source_id: int  # from schema metadata in request (named identically)
     source_id: int  # request source id
     source_type: str  # request source type

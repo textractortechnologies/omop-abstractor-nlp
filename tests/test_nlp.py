@@ -1,5 +1,4 @@
 from unittest.mock import patch, call
-from icecream import ic
 from fastapi.encoders import jsonable_encoder
 from abstractor.app.dataclasses import *
 import datetime

@@ -1,4 +1,4 @@
-from fastapi import BackgroundTasks
+from fastapi import BackgroundTasks, FastAPI
 from abstractor.app.events import *
 from abstractor.app.dataclasses import *
 
@@ -30,15 +30,14 @@ def multiple_suggest(background_tasks: BackgroundTasks, request: SuggestRequest)
     background_tasks :
         param request:
     background_tasks: BackgroundTasks :
-        
+
     request: SuggestRequest :
-        
+
 
     Returns
     -------
 
     """
-    ic(request.source_id)
     background_tasks.add_task(EventHandler.handle_request, request)
     return {"msg": f"request accepted"}
 
@@ -54,13 +53,12 @@ def get_abstraction_schema_stub(schema_id: str) -> AbstractionSchema:
     Parameters
     ----------
     schema_id: str :
-        
+
 
     Returns
     -------
 
     """
-    ic(schema_id)
     return AbstractionSchema(
         predicate="foo",
         display_name="bar",
@@ -81,13 +79,12 @@ def accept_suggestion_stub(abstractor_abstraction_id: int, suggestion: Suggestio
     Parameters
     ----------
     abstractor_abstraction_id: int :
-        
+
     suggestion: Suggestion :
-        
+
 
     Returns
     -------
 
     """
-    ic(abstractor_abstraction_id)
     return {"msg": f"accepted suggestion {suggestion.abstractor_abstraction_source_id}"}

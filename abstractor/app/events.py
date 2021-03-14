@@ -1,9 +1,9 @@
 import pluggy
+import requests
 import abstractor
 from typing import Tuple
 from fastapi import HTTPException
 from fastapi.encoders import jsonable_encoder
-from icecream import ic
 from abstractor.app.dataclasses import *
 from abstractor.nlp import hookspecs
 
@@ -45,7 +45,7 @@ class EventHandler:
         schema_metadata :
             return:
         schema_metadata: AbstractionSchemaMetaData :
-            
+
 
         Returns
         -------
@@ -80,11 +80,11 @@ class EventHandler:
         request :
             param schema:
         request: SuggestRequest :
-            
+
         schema: AbstractionSchema :
-            
+
         schema_idx: int :
-            
+
 
         Returns
         -------
@@ -120,9 +120,9 @@ class EventHandler:
         suggestion :
             param schema_metadata:
         suggestion: Suggestion :
-            
+
         schema_metadata: AbstractionSchemaMetaData :
-            
+
 
         Returns
         -------
@@ -141,7 +141,7 @@ class EventHandler:
         request :
             return:
         request: SuggestRequest :
-            
+
 
         Returns
         -------
