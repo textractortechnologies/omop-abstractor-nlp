@@ -1,1 +1,1 @@
-from abstractor.nlp import hookspecs
+# from abstractor.nlp import hookspecs
