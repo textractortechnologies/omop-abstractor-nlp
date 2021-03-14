@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="omop_abstractor_nlp",
+    name="abstractor",
     version="0.1.0",
     author="Will Thompson",
     author_email="wkt@northwestern.edu",
@@ -10,18 +10,17 @@ setup(
     description="NLP web service API code for the OMOP Abstractor",
     packages=find_packages(include=["abstractor", "abstractor.*"]),
     include_package_data=True,
+    python_requires=">=3.8",
     install_requires=[
-        "pluggy",
-        "fastapi",
-        "uvicorn",
-        "requests",
-        "pydantic",
-        # "celery",
-        # "rabbitmq",
+        "pluggy >=0.13.1, < 1",
+        "fastapi >=0.63.0, < 1",
+        "uvicorn >=0.13.4, < 1",
+        "requests >= 2.25.1, <3",
+        "pydantic >= 1.8.1, < 2",
     ],
     extras_require={
         "interactive": ["jupyterlab", "rise"],
-        "tests": ["pytest", "pyhamcrest", "icecream", "starlette", "pyyaml"],
-        "dev": ["black", "pyment"]
+        "dev": ["black", "pyment"],
+        "test": ["pytest", "pyhamcrest", "icecream", "starlette", "pyyaml"]
     },
 )
