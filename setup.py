@@ -9,6 +9,7 @@ setup(
     maintainer_email="wkt@northwestern.edu",
     description="NLP web service API code for the OMOP Abstractor",
     packages=find_packages(include=["abstractor", "abstractor.*"]),
+    package_data={'abstractor': ['data/*']},
     include_package_data=True,
     python_requires=">=3.8",
     install_requires=[
