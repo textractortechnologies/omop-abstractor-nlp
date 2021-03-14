@@ -21,6 +21,6 @@ setup(
         # "rabbitmq",
     ],
     extras_require={"interactive": ["jupyterlab", "rise"]},
-    setup_requires=["black"],
+    setup_requires=["black", "pyment"],
     tests_require=["pytest", "pyhamcrest"],
 )

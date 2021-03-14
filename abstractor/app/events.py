@@ -9,6 +9,7 @@ from abstractor.nlp import hookspecs
 
 
 def get_plugin_manager():
+    """ """
     pm = pluggy.PluginManager(abstractor.PROJECT_NAME)
     pm.add_hookspecs(hookspecs)
     pm.load_setuptools_entrypoints(abstractor.PROJECT_NAME)
@@ -19,10 +20,16 @@ plugin_manager = get_plugin_manager()
 
 
 class EventHandler:
-    """
-    EventHandler class
+    """EventHandler class
     Note: Gathering the event handing functions here makes it easier to test and mock
     this functionality
+
+    Parameters
+    ----------
+
+    Returns
+    -------
+
     """
 
     schema_cache: Dict[str, Tuple[AbstractionSchemaMetaData, AbstractionSchema]] = {}
@@ -31,10 +38,18 @@ class EventHandler:
     def get_abstraction_schema(
         schema_metadata: AbstractionSchemaMetaData,
     ) -> AbstractionSchema:
-        """
-        get_abstraction_schema
-        :param schema_metadata:
-        :return:
+        """get_abstraction_schema
+
+        Parameters
+        ----------
+        schema_metadata :
+            return:
+        schema_metadata: AbstractionSchemaMetaData :
+            
+
+        Returns
+        -------
+
         """
         schema_uri = schema_metadata.abstractor_abstraction_schema_uri
 
@@ -58,11 +73,22 @@ class EventHandler:
     def run_nlp(
         request: SuggestRequest, schema: AbstractionSchema, schema_idx: int
     ) -> List[Suggestion]:
-        """
-        run_nlp
-        :param request:
-        :param schema:
-        :return:
+        """run_nlp
+
+        Parameters
+        ----------
+        request :
+            param schema:
+        request: SuggestRequest :
+            
+        schema: AbstractionSchema :
+            
+        schema_idx: int :
+            
+
+        Returns
+        -------
+
         """
         suggestion_source_dicts = plugin_manager.hook.extract_suggestions(
             request=request, schema=schema, schema_idx=schema_idx
@@ -87,11 +113,20 @@ class EventHandler:
     def submit_suggestion(
         suggestion: Suggestion, schema_metadata: AbstractionSchemaMetaData
     ) -> bool:
-        """
-        submit_suggestion
-        :param suggestion:
-        :param schema_metadata:
-        :return:
+        """submit_suggestion
+
+        Parameters
+        ----------
+        suggestion :
+            param schema_metadata:
+        suggestion: Suggestion :
+            
+        schema_metadata: AbstractionSchemaMetaData :
+            
+
+        Returns
+        -------
+
         """
         suggest_uri = schema_metadata.abstractor_abstraction_abstractor_suggestions_uri
         resp = requests.post(suggest_uri, json=jsonable_encoder(suggestion))
@@ -99,10 +134,18 @@ class EventHandler:
 
     @staticmethod
     def handle_request(request: SuggestRequest) -> None:
-        """
-        handle_request
-        :param request:
-        :return:
+        """handle_request
+
+        Parameters
+        ----------
+        request :
+            return:
+        request: SuggestRequest :
+            
+
+        Returns
+        -------
+
         """
         for idx, schema_metadata in enumerate(request.abstractor_abstraction_schemas):
             schema = EventHandler.get_abstraction_schema(schema_metadata)

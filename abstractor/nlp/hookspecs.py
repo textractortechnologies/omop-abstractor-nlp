@@ -11,10 +11,24 @@ hookspec = pluggy.HookspecMarker(abstractor.PROJECT_NAME)
 def extract_suggestions(
     request: SuggestRequest, schema: AbstractionSchema, schema_idx: int
 ) -> Dict[str, List[SuggestionSource]]:
-    """
-    Extract suggestions
-    :param request:
-    :param schema:
-    :param schema_idx:
-    :return: A dictionary, mapping from schema values to a list of suggestion sources supporting that value
+    """Extract suggestions
+
+    Parameters
+    ----------
+    request :
+        param schema:
+    schema_idx :
+        return: A dictionary, mapping from schema values to a list of suggestion sources supporting that value
+    request: SuggestRequest :
+        
+    schema: AbstractionSchema :
+        
+    schema_idx: int :
+        
+
+    Returns
+    -------
+    type
+        A dictionary, mapping from schema values to a list of suggestion sources supporting that value
+
     """

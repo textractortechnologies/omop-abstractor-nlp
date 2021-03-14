@@ -8,20 +8,35 @@ app = FastAPI()
 
 @app.get("/", status_code=200)
 def greeting():
-    """
-    greeting
+    """greeting
     :return:
+
+    Parameters
+    ----------
+
+    Returns
+    -------
+
     """
     return {"msg": "OMOP Abstractor NLP Service"}
 
 
 @app.post("/multiple_suggest", status_code=200)
 def multiple_suggest(background_tasks: BackgroundTasks, request: SuggestRequest):
-    """
-    multiple_suggest
-    :param background_tasks:
-    :param request:
-    :return:
+    """multiple_suggest
+
+    Parameters
+    ----------
+    background_tasks :
+        param request:
+    background_tasks: BackgroundTasks :
+        
+    request: SuggestRequest :
+        
+
+    Returns
+    -------
+
     """
     ic(request.source_id)
     background_tasks.add_task(EventHandler.handle_request, request)
@@ -34,6 +49,17 @@ def multiple_suggest(background_tasks: BackgroundTasks, request: SuggestRequest)
     response_model=AbstractionSchema,
 )
 def get_abstraction_schema_stub(schema_id: str) -> AbstractionSchema:
+    """
+
+    Parameters
+    ----------
+    schema_id: str :
+        
+
+    Returns
+    -------
+
+    """
     ic(schema_id)
     return AbstractionSchema(
         predicate="foo",
@@ -50,5 +76,18 @@ def get_abstraction_schema_stub(schema_id: str) -> AbstractionSchema:
     status_code=200,
 )
 def accept_suggestion_stub(abstractor_abstraction_id: int, suggestion: Suggestion):
+    """
+
+    Parameters
+    ----------
+    abstractor_abstraction_id: int :
+        
+    suggestion: Suggestion :
+        
+
+    Returns
+    -------
+
+    """
     ic(abstractor_abstraction_id)
     return {"msg": f"accepted suggestion {suggestion.abstractor_abstraction_source_id}"}
