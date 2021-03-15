@@ -1,11 +1,16 @@
 import pluggy
 import requests
 import textabstractor
-from typing import Tuple
+from typing import Tuple, Dict, List
 from fastapi import HTTPException
 from fastapi.encoders import jsonable_encoder
-from textabstractor.app.dataclasses import *
 from textabstractor.nlp import hookspecs
+from textabstractor.app.dataclasses import (
+    AbstractionSchema,
+    AbstractionSchemaMetaData,
+    Suggestion,
+    SuggestRequest,
+)
 
 
 def get_plugin_manager():

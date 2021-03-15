@@ -3,9 +3,12 @@ import pytest
 import json
 from pathlib import Path
 from starlette.testclient import TestClient
-from textabstractor.app.dataclasses import *
 from textabstractor.app.main import app
-
+from textabstractor.app.dataclasses import (
+    AbstractionSchema,
+    Suggestion,
+    SuggestRequest,
+)
 
 dir_path = Path(os.path.dirname(os.path.realpath(__file__)))
 

@@ -1,6 +1,10 @@
 from fastapi import BackgroundTasks, FastAPI
-from textabstractor.app.events import *
-from textabstractor.app.dataclasses import *
+from textabstractor.app.events import EventHandler
+from textabstractor.app.dataclasses import (
+    AbstractionSchema,
+    Suggestion,
+    SuggestRequest,
+)
 
 
 app = FastAPI()
@@ -39,7 +43,7 @@ def multiple_suggest(background_tasks: BackgroundTasks, request: SuggestRequest)
 
     """
     background_tasks.add_task(EventHandler.handle_request, request)
-    return {"msg": f"request accepted"}
+    return {"msg": "request accepted"}
 
 
 @app.get(

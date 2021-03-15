@@ -1,8 +1,14 @@
 import os
 import json
 import textabstractor
-from textabstractor.app.dataclasses import *
 from pathlib import Path
+from typing import Dict, List
+from textabstractor.app.dataclasses import (
+    AbstractionSchema,
+    Suggestion,
+    SuggestRequest,
+    SuggestionSource
+)
 
 # ---------------------------------------------------------------
 # Plugin project setup.py contents:

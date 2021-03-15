@@ -1,7 +1,11 @@
 import pluggy
 import textabstractor
-from textabstractor.app.dataclasses import *
-
+from typing import Dict, List
+from textabstractor.app.dataclasses import (
+    AbstractionSchema,
+    SuggestRequest,
+    SuggestionSource
+)
 
 hookspec = pluggy.HookspecMarker(textabstractor.__project_name__)
 

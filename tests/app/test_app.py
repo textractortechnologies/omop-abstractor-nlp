@@ -1,11 +1,13 @@
 from unittest.mock import patch, call
 from fastapi.encoders import jsonable_encoder
-from tests.app.mock_services import *
 import textabstractor
+from textabstractor.app.dataclasses import (
+    AbstractionSchema
+)
 
 
 def test_smoke(client):
-    response = client.get(f"/")
+    response = client.get("/")
     assert response.ok is True
     assert response.json() == {"msg": "OMOP Abstractor NLP Service"}
 
@@ -35,22 +37,6 @@ def test_suggestion_service(client, suggestion_1, suggestion_2):
     assert response.json() == {
         "msg": f"accepted suggestion {suggestion_2.abstractor_abstraction_source_id}"
     }
-
-
-def test_test_multiple_suggest(client, request_1):
-    response = client.post(
-        "/test_multiple_suggest",
-        json=jsonable_encoder(request_1),
-    )
-    assert response.ok is True
-    assert response.json() == {"msg": "request accepted"}
-
-    response = client.post(
-        f"/test_multiple_suggest",
-        json=jsonable_encoder(request_1),
-    )
-    assert response.ok is True
-    assert response.json() == {"msg": "request accepted"}
 
 
 @patch.object(

@@ -1,9 +1,13 @@
 from unittest.mock import patch, call
 from fastapi.encoders import jsonable_encoder
-from textabstractor.app.dataclasses import *
 import datetime
 import textabstractor
 from tests.nlp import nlp_impl
+from textabstractor.app.dataclasses import (
+    AbstractionSchemaMetaData,
+    Suggestion,
+    SuggestionSource
+)
 
 
 @patch.object(
