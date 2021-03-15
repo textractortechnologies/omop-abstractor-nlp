@@ -1,12 +1,10 @@
-# NLP Library and Service for OMOP Abstractor
+# NLP Web Service API for the OMOP Abstractor
 
-## Installation:
+## Installation (requires python >= 3.8):
 ```bash
-conda env crate -f environment.yml
-conda activate textractor-env
-python -m spacy download en_core_web_sm
+pip install abstractor
 ```
 ## Usage:
 ```bash
- uvicorn abstractor.service.main:app --reload
+ uvicorn abstractor.app.main:app
 ```
