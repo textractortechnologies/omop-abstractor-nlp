@@ -25,7 +25,7 @@ setup(
     ],
     extras_require={
         "interactive": ["jupyterlab", "rise"],
-        "dev": ["black", "pyment", "twine", "tox", "bumpversion", "flake8"],
+        "dev": ["black", "pyment", "twine", "tox", "bumpversion", "flake8", "coverage"],
         "test": ["pytest", "pyhamcrest", "icecream", "starlette", "pyyaml"]
     },
 )
