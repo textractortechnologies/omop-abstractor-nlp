@@ -1,9 +1,8 @@
-__version__ = "0.1.1"
+from textabstractor.about import __project_name__, __version__
 
-PROJECT_NAME = "omop_abstractor_nlp"
 import pluggy
 
-hookimpl = pluggy.HookimplMarker(PROJECT_NAME)
+hookimpl = pluggy.HookimplMarker(__project_name__)
 
 from textabstractor import app
 from textabstractor import nlp

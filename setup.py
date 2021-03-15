@@ -1,8 +1,12 @@
 from setuptools import setup, find_packages
 
+ABOUT = {}
+with open("textabstractor/about.py", "r") as about_file:
+    exec(about_file.read(), ABOUT)
+
 setup(
-    name="textabstractor",
-    version="0.1.1",
+    name=ABOUT["__project_name__"],
+    version=ABOUT["__version__"],
     author="Will Thompson",
     author_email="wkt@northwestern.edu",
     maintainer="Will Thompson",

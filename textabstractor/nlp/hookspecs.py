@@ -3,7 +3,7 @@ import textabstractor
 from textabstractor.app.dataclasses import *
 
 
-hookspec = pluggy.HookspecMarker(textabstractor.PROJECT_NAME)
+hookspec = pluggy.HookspecMarker(textabstractor.__project_name__)
 
 
 @hookspec

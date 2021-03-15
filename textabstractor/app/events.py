@@ -10,9 +10,9 @@ from textabstractor.nlp import hookspecs
 
 def get_plugin_manager():
     """ """
-    pm = pluggy.PluginManager(textabstractor.PROJECT_NAME)
+    pm = pluggy.PluginManager(textabstractor.__project_name__)
     pm.add_hookspecs(hookspecs)
-    pm.load_setuptools_entrypoints(textabstractor.PROJECT_NAME)
+    pm.load_setuptools_entrypoints(textabstractor.__project_name__)
     return pm
 
 
