@@ -1,9 +1,8 @@
 from setuptools import setup, find_packages
-from textabstractor.about import __version__
 
 setup(
     name="textabstractor",
-    version=__version__,
+    version="0.1.1",
     author="Will Thompson",
     author_email="wkt@northwestern.edu",
     maintainer="Will Thompson",

@@ -1,4 +1,4 @@
-from .about import __version__  # noqa: F401
+__version__ = "0.1.1"
 
 PROJECT_NAME = "omop_abstractor_nlp"
 import pluggy
