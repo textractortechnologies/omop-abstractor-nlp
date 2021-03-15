@@ -4,9 +4,9 @@ RUN pip install --upgrade pip
 
 WORKDIR /app
 
-COPY ./abstractor /app/abstractor
+COPY textabstractor /app/textabstractor
 COPY ./setup.py /app
-COPY ./abstractor/app/main.py /app/main.py
+COPY textabstractor/app/main.py /app/main.py
 
 RUN pip install .
 

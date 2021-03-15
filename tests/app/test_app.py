@@ -1,7 +1,7 @@
 from unittest.mock import patch, call
 from fastapi.encoders import jsonable_encoder
-from mock_services import *
-import abstractor
+from tests.app.mock_services import *
+import textabstractor
 
 
 def test_smoke(client):
@@ -54,13 +54,13 @@ def test_test_multiple_suggest(client, request_1):
 
 
 @patch.object(
-    abstractor.app.events.EventHandler,
+    textabstractor.app.events.EventHandler,
     "submit_suggestion",
     name="mock_submit_suggestion",
 )
-@patch.object(abstractor.app.events.EventHandler, "run_nlp", name="mock_run_nlp")
+@patch.object(textabstractor.app.events.EventHandler, "run_nlp", name="mock_run_nlp")
 @patch.object(
-    abstractor.app.events.EventHandler,
+    textabstractor.app.events.EventHandler,
     "get_abstraction_schema",
     name="mock_get_abstraction_schema",
 )

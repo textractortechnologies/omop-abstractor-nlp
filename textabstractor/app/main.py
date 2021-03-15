@@ -1,6 +1,6 @@
 from fastapi import BackgroundTasks, FastAPI
-from abstractor.app.events import *
-from abstractor.app.dataclasses import *
+from textabstractor.app.events import *
+from textabstractor.app.dataclasses import *
 
 
 app = FastAPI()

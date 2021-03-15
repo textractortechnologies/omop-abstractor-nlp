@@ -4,8 +4,8 @@ import yaml
 import json
 from pathlib import Path
 from starlette.testclient import TestClient
-from abstractor.app.dataclasses import *
-from abstractor.app.main import app
+from textabstractor.app.dataclasses import *
+from textabstractor.app.main import app
 
 
 dir_path = Path(os.path.dirname(os.path.realpath(__file__)))

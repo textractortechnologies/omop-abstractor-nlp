@@ -1,15 +1,15 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="abstractor",
+    name="textabstractor",
     version="0.1.0",
     author="Will Thompson",
     author_email="wkt@northwestern.edu",
     maintainer="Will Thompson",
     maintainer_email="wkt@northwestern.edu",
     description="NLP web service API code for the OMOP Abstractor",
-    packages=find_packages(include=["abstractor", "abstractor.*"]),
-    package_data={'abstractor': ['data/*']},
+    packages=find_packages(include=["textabstractor", "textabstractor.*"]),
+    package_data={'textabstractor': ['data/*']},
     include_package_data=True,
     python_requires=">=3.8",
     install_requires=[
@@ -21,7 +21,7 @@ setup(
     ],
     extras_require={
         "interactive": ["jupyterlab", "rise"],
-        "dev": ["black", "pyment"],
+        "dev": ["black", "pyment", "twine"],
         "test": ["pytest", "pyhamcrest", "icecream", "starlette", "pyyaml"]
     },
 )

@@ -3,5 +3,5 @@ import pluggy
 
 hookimpl = pluggy.HookimplMarker(PROJECT_NAME)
 
-from abstractor import app
-from abstractor import nlp
+from textabstractor import app
+from textabstractor import nlp

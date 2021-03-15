@@ -1,18 +1,18 @@
 from unittest.mock import patch, call
 from fastapi.encoders import jsonable_encoder
-from abstractor.app.dataclasses import *
+from textabstractor.app.dataclasses import *
 import datetime
-import abstractor
-import nlp_impl
+import textabstractor
+from tests.nlp import nlp_impl
 
 
 @patch.object(
-    abstractor.app.events.EventHandler,
+    textabstractor.app.events.EventHandler,
     "submit_suggestion",
     name="mock_submit_suggestion",
 )
 @patch.object(
-    abstractor.app.events.EventHandler,
+    textabstractor.app.events.EventHandler,
     "get_abstraction_schema",
     name="mock_get_abstraction_schema",
 )
@@ -27,11 +27,11 @@ def test_nlp_plugin(
     suggestion_2,
 ):
     # block any currently resistered plugins
-    for n in abstractor.app.events.plugin_manager.list_name_plugin():
-        abstractor.app.events.plugin_manager.set_blocked(n[0])
+    for n in textabstractor.app.events.plugin_manager.list_name_plugin():
+        textabstractor.app.events.plugin_manager.set_blocked(n[0])
 
     # register the test plugin
-    abstractor.app.events.plugin_manager.register(nlp_impl)
+    textabstractor.app.events.plugin_manager.register(nlp_impl)
 
     mock_get.side_effect = [schema_1, schema_2]
     mock_suggest.return_value = None

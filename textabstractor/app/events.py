@@ -1,18 +1,18 @@
 import pluggy
 import requests
-import abstractor
+import textabstractor
 from typing import Tuple
 from fastapi import HTTPException
 from fastapi.encoders import jsonable_encoder
-from abstractor.app.dataclasses import *
-from abstractor.nlp import hookspecs
+from textabstractor.app.dataclasses import *
+from textabstractor.nlp import hookspecs
 
 
 def get_plugin_manager():
     """ """
-    pm = pluggy.PluginManager(abstractor.PROJECT_NAME)
+    pm = pluggy.PluginManager(textabstractor.PROJECT_NAME)
     pm.add_hookspecs(hookspecs)
-    pm.load_setuptools_entrypoints(abstractor.PROJECT_NAME)
+    pm.load_setuptools_entrypoints(textabstractor.PROJECT_NAME)
     return pm
 
 

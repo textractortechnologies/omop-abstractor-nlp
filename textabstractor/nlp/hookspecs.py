@@ -1,9 +1,9 @@
 import pluggy
-import abstractor
-from abstractor.app.dataclasses import *
+import textabstractor
+from textabstractor.app.dataclasses import *
 
 
-hookspec = pluggy.HookspecMarker(abstractor.PROJECT_NAME)
+hookspec = pluggy.HookspecMarker(textabstractor.PROJECT_NAME)
 
 
 @hookspec

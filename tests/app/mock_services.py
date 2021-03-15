@@ -3,15 +3,15 @@ import json
 from pathlib import Path
 from icecream import ic
 from fastapi import HTTPException, BackgroundTasks, Depends
-from abstractor.app.main import app
-from abstractor.app.dataclasses import *
+from textabstractor.app.main import app
+from textabstractor.app.dataclasses import *
 
 
 dir_path = Path(os.path.dirname(os.path.realpath(__file__)))
 
-json_text = Path(dir_path / "data/schema-1.json").read_text()
+json_text = Path(dir_path / "../data/schema-1.json").read_text()
 schema_1 = AbstractionSchema(**json.loads(json_text))
-json_text = Path(dir_path / "data/schema-2.json").read_text()
+json_text = Path(dir_path / "../data/schema-2.json").read_text()
 schema_2 = AbstractionSchema(**json.loads(json_text))
 
 

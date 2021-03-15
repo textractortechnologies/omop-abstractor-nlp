@@ -2,9 +2,9 @@
 
 ## Installation (requires python >= 3.8):
 ```bash
-pip install abstractor
+pip install textabstractor
 ```
 ## Usage:
 ```bash
- uvicorn abstractor.app.main:app
+ uvicorn textabstractor.app.main:app
 ```
