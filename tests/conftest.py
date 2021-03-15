@@ -1,6 +1,5 @@
 import os
 import pytest
-import yaml
 import json
 from pathlib import Path
 from starlette.testclient import TestClient
@@ -9,14 +8,6 @@ from textabstractor.app.main import app
 
 
 dir_path = Path(os.path.dirname(os.path.realpath(__file__)))
-
-
-@pytest.fixture(scope="session")
-def config():
-    config_file = dir_path / "config.yml"
-    with open(config_file) as f:
-        conf = yaml.load(f, Loader=yaml.FullLoader)
-        return conf
 
 
 @pytest.fixture(scope="module")
