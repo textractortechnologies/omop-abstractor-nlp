@@ -1,8 +1,9 @@
 from setuptools import setup, find_packages
+from textabstractor.about import __version__
 
 setup(
     name="textabstractor",
-    version="0.1.0",
+    version=__version__,
     author="Will Thompson",
     author_email="wkt@northwestern.edu",
     maintainer="Will Thompson",
@@ -21,7 +22,7 @@ setup(
     ],
     extras_require={
         "interactive": ["jupyterlab", "rise"],
-        "dev": ["black", "pyment", "twine", "tox"],
+        "dev": ["black", "pyment", "twine", "tox", "bumpversion"],
         "test": ["pytest", "pyhamcrest", "icecream", "starlette", "pyyaml"]
     },
 )
