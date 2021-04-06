@@ -60,6 +60,6 @@ typer==0.3.2
 typing-extensions==3.7.4.3
 Unidecode==1.2.0
 unqlite==0.9.2
-urllib3==1.26.3
+urllib3==1.26.4
 uvicorn==0.13.4
 wasabi==0.8.2
