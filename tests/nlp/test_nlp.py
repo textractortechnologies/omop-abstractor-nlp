@@ -30,7 +30,7 @@ def test_nlp_plugin(
     suggestion_1,
     suggestion_2,
 ):
-    # block any currently resistered plugins
+    # block any currently registered plugins
     for n in textabstractor.app.events.plugin_manager.list_name_plugin():
         textabstractor.app.events.plugin_manager.set_blocked(n[0])
 

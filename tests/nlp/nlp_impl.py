@@ -30,7 +30,7 @@ json_text = Path(dir_path / "../data/suggestion-1.json").read_text()
 json_dict = json.loads(json_text)
 suggestion1 = Suggestion(**json_dict)
 
-json_text = Path(dir_path / "../data/suggestion-2.json").read_text()
+json_text = Path(dir_path / "../data/suggestion-1.json").read_text()
 json_dict = json.loads(json_text)
 suggestion2 = Suggestion(**json_dict)
 

@@ -20,7 +20,7 @@ def client() -> TestClient:
 
 @pytest.fixture(scope="session")
 def schema_0() -> AbstractionSchema:
-    json_text = Path(dir_path / "data/schema-0.json").read_text()
+    json_text = Path(dir_path / "data/schema-cancer-site.json").read_text()
     json_dict = json.loads(json_text)
     schema = AbstractionSchema(**json_dict)
     return schema
@@ -60,7 +60,7 @@ def suggestion_1() -> SuggestRequest:
 
 @pytest.fixture(scope="session")
 def suggestion_2() -> SuggestRequest:
-    json_text = Path(dir_path / "data/suggestion-2.json").read_text()
+    json_text = Path(dir_path / "data/suggestion-1.json").read_text()
     json_dict = json.loads(json_text)
     suggestion = Suggestion(**json_dict)
     return suggestion
