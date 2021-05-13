@@ -33,7 +33,7 @@ pluggy==0.13.1
 preshed==3.0.5
 py==1.10.0
 pyaml==20.4.0
-pydantic==1.7.3
+pydantic==1.7.4
 Pygments==2.8.1
 PyHamcrest==2.0.2
 pyodbc==4.0.30
